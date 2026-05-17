@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import "./App.css";
 
 
@@ -36,34 +36,129 @@ const quizData = [
 ];
 
 
+// reusable component for question text and answer options
+// receives question text and answer options through props
+function Question({ currentQuestion, alterScore }) {
+  const [selected, setSelected] = useState(null);
+  const [showDuck, setShowDuck] = useState(false);
+
+  useEffect(() => {
+    setSelected(null);
+    setShowDuck(false);
+  }, [currentQuestion]);
+
+  function checkAnswer(index) {
+    if (selected !== null) return;
+
+    setSelected(index);
+    setShowDuck(true);
+
+    const isCorrect = index === currentQuestion.correct;
+    alterScore(isCorrect);
+  }
+
+  return (
+    <>
+      <h2>{currentQuestion.text}</h2>
+      <div className="answers">
+        {currentQuestion.options.map((option, index) => (
+          <AnswerButton
+            key={index}
+            option={option}
+            index={index}
+            selected={selected}
+            correct={currentQuestion.correct}
+            checkAnswer={checkAnswer}
+          />
+        ))}
+      </div>
+
+      {showDuck && (
+        <div className="inline-duck-container run">
+          <img
+            src="/feedbackduck.gif"
+            className="inline-duck-gif"
+            alt="Duck Feedback"
+          />
+          <span
+            className={`inline-feedback-text ${
+              selected === currentQuestion.correct
+                ? "correct-text"
+                : "wrong-text"
+            }`}
+          >
+            {selected === currentQuestion.correct
+              ? "Quack! Correct!"
+              : "Oh no! Wrong!"}
+          </span>
+        </div>
+      )}
+    </>
+  );
+}
+
+
+// reusable component for answer button
+// receives all needed data through props
+function AnswerButton({
+  option,
+  index,
+  selected,
+  correct,
+  checkAnswer,
+}) {
+  return (
+    <button
+      // dynamic classes for correct/wrong answers
+      className={`answer 
+      ${
+        selected !== null && index === correct
+          ? "correct"
+          : ""
+      }
+      ${
+        selected === index && index !== correct
+          ? "wrong"
+          : ""
+      }`}
+      
+      // disable buttons after selecting answer
+      disabled={selected !== null}
+
+      // send selected answer index
+      onClick={() => checkAnswer(index)}
+    >
+      {option}
+    </button>
+  );
+}
+
+
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
-  // the selected answer index.
-  const [selected, setSelected] = useState(null);
-  const [showDuck, setShowDuck] = useState(false);
-  // the current question object from quizData.
-  const currentQuestion = quizData[currentIndex];
+
+  // tracks whether current question has been answered (for Next button)
+  const [answered, setAnswered] = useState(false);
+
+  // memoized current question object
+  const currentQuestion = useMemo(() => quizData[currentIndex], [currentIndex]);
 
 
-  function checkAnswer(index) {
-    // if an answer is already selected, stop the function.
-    if (selected !== null) return;
-    setSelected(index);
-    setShowDuck(true);
-    if (index === currentQuestion.correct) {
-      setScore(score + 1);
-    }
+  // called by Question after an answer is selected
+  function alterScore(isCorrect) {
+    if (isCorrect) setScore((s) => s + 1);
+    setAnswered(true);
   }
 
 
   function nextQuestion() {
-    setCurrentIndex(currentIndex + 1);
-    setSelected(null);
-    setShowDuck(false);
+    setCurrentIndex((prevIndex) => prevIndex + 1);
+    setAnswered(false);
   }
 
 
+  // final screen after all questions
   if (currentIndex >= quizData.length) {
     return (
       <div className="app">
@@ -78,6 +173,7 @@ function App() {
           <h2>
             Your score: {score} / {quizData.length}
           </h2>
+
           <div className="final-duck-card-container active">
             <img
               src="/dancingduck.gif"
@@ -90,10 +186,9 @@ function App() {
     );
   }
 
-
   return (
-
     <div className="app">
+
       <header className="header">
         <h1>🧠 Knowledge Quiz</h1>
         <p>Test your general knowledge</p>
@@ -107,74 +202,22 @@ function App() {
           <span>Score: {score}</span>
         </div>
 
-
-        <h2>{currentQuestion.text}</h2>
-        <div className="answers">
-          {currentQuestion.options.map((option, index) => (
-            <button
-              // unique key required by react when rendering lists
-              key={index}
-              // Dynamic CSS classes.
-              className={`answer 
-              ${
-                selected !== null &&
-                index === currentQuestion.correct
-                  ? "correct"
-                  : ""
-              }
-              ${
-                selected === index &&
-                index !== currentQuestion.correct
-                  ? "wrong"
-                  : ""
-              }`}
-              // disable buttons after answer selection.
-              disabled={selected !== null}
-              // run checkAnswer
-              onClick={() => checkAnswer(index)}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
+        {/* reuVable question component */}
+        <Question currentQuestion={currentQuestion} alterScore={alterScore} />
 
 
-        {/* show duck animation only if showDuck = true */}
-        {showDuck && (
-
-          <div className="inline-duck-container run">
-
-            <img
-              src="/feedbackduck.gif"
-              className="inline-duck-gif"
-              alt="Duck Feedback"
-            />
-            <span
-              className={`inline-feedback-text ${
-                selected === currentQuestion.correct
-                  ? "correct-text"
-                  : "wrong-text"
-              }`}
-            >
-              {selected === currentQuestion.correct
-                ? "Quack! Correct!"
-                : "Oh no! Wrong!"}
-            </span>
-          </div>
-        )}
-
-
-        {selected !== null && (
+        {/* next question button */}
+        {answered && (
           <button id="nextBtn" onClick={nextQuestion}>
             Next Question ➜
           </button>
         )}
       </div>
 
-
       <footer>
         <p className="footer-text">Built for Fun</p>
       </footer>
+
     </div>
   );
 }
