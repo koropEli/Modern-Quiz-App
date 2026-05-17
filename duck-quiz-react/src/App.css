@@ -2,14 +2,19 @@
 
 body {
     font-family: "Poppins", sans-serif;
-    background: url('grassbackground.jpg') no-repeat center center fixed;
+    background: url('/grassbackground.jpg') no-repeat center center fixed;
     background-size: cover;
-    height: 100vh;
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#root {
+    width: 100%;
+    /* min-height: 100vh; */
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    margin: 0;
 }
 
 .app {
@@ -18,14 +23,31 @@ body {
     text-align: center;
 }
 
+.header {
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    color: rgb(44, 44, 44);
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 42px;
+}
+
+.header p {
+    color: rgb(78, 78, 78);
+    margin: 0;
+    /* font-size: 18px; */
+}
+
 .card {
     background: white;
-    padding: 25px 25px 80px 25px; 
+    padding: 25px 25px 80px 25px;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     position: relative;
     z-index: 2;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .top-bar {
@@ -36,7 +58,11 @@ body {
     margin-bottom: 20px;
 }
 
-#question {
+h1 {
+    color: #333;
+}
+
+h2 {
     font-size: 22px;
     margin-bottom: 20px;
     color: #333;
@@ -56,16 +82,18 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: 0.3s;
+    color:#333
 }
 
-.answer:hover:not(:disabled) {
-    background: #e5e7eb;
+.answer.correct {
+    background: #22c55e !important;
+    color: white;
 }
 
-.answer.correct { background: #22c55e !important; color: white; }
-.answer.wrong { background: #ef4444 !important; color: white; }
-
-/* --- Animation --- */
+.answer.wrong {
+    background: #ef4444 !important;
+    color: white;
+}
 
 .inline-duck-container {
     margin-top: 20px;
@@ -75,7 +103,7 @@ body {
     justify-content: center;
     gap: 15px;
     z-index: 10;
-    pointer-events: none; 
+    pointer-events: none;
 }
 
 .inline-duck-container img {
@@ -83,18 +111,8 @@ body {
 }
 
 .inline-duck-container.run img {
-    transition: transform 3s linear; 
-    transform: translateX(0); 
-}
-
-.inline-duck-container span {
-    opacity: 0;
-}
-
-.inline-duck-container.run span {
-    opacity: 1;
-    transition: opacity 0.3s;
-    transition-delay: 3s; 
+    transition: transform 3s linear;
+    transform: translateX(0);
 }
 
 .inline-duck-gif {
@@ -104,22 +122,38 @@ body {
 
 .inline-feedback-text {
     font-weight: 600;
-    font-size: 28px; 
+    font-size: 28px;
+    opacity: 0;
+}
+
+.inline-duck-container.run .inline-feedback-text {
+    opacity: 1;
+    transition: opacity 0.3s;
+    transition-delay: 3s;
+}
+
+.correct-text {
+    color: #22c55e;
+}
+
+.wrong-text {
+    color: #ef4444;
 }
 
 .final-duck-card-container {
-    display: none;
+    display: flex;
     justify-content: center;
+    margin-top: 20px;
 }
 
-.final-duck-card-container.active {
-    display: flex;
+.duck {
+    height: 180px;
 }
 
 #nextBtn {
     position: absolute;
     bottom: 25px;
-    right: 25px; /* Перенесла направо, так привычнее */
+    right: 25px;
     padding: 12px 25px;
     background: #4f46e5;
     color: white;
@@ -127,5 +161,9 @@ body {
     border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-    display: none; 
+}
+
+.footer-text {
+    color: white;
+    margin-top: 20px;
 }

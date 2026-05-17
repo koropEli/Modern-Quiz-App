@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Quiz App (Simplified)</title>
+    <title>Duck Quiz Adventure</title>
     <link rel="stylesheet" href="styles.css"/>
 </head>
-
 <body>
     <div class="app">
-
         <header class="header">
             <h1>🧠 Knowledge Quiz</h1>
             <p>Test your general knowledge</p>
@@ -20,23 +18,23 @@
                 <span id="progress">Question 1 / 5</span>
                 <span id="score">Score: 0</span>
             </div>
-            
+    
             <h2 id="question">Question text</h2>
-
-            <div id="answers" class="answers">
-                <button class="answer" id="btn0" onclick="check(0)"></button>
-                <button class="answer" id="btn1" onclick="check(1)"></button>
-                <button class="answer" id="btn2" onclick="check(2)"></button>
-                <button class="answer" id="btn3" onclick="check(3)"></button>
+            <div id="answers" class="answers"></div>
+            <div id="inlineDuckContainer" class="inline-duck-container">
+                <img src="feedbackduck.gif" class="inline-duck-gif" alt="Duck Feedback">
+                <span id="inlineFeedbackText" class="inline-feedback-text"></span>
             </div>
 
+            <div id="finalDuckContainer" class="final-duck-card-container">
+                <img src="dancingduck.gif" alt="Dancing Duck">
+            </div>
             <button id="nextBtn">Next Question ➜</button>
         </div>
 
         <footer>
-            <p>Built for Fun</p>
+            <p style="color: white; margin-top: 20px;">Built for Fun</p>
         </footer>
-
     </div>
 
     <script src="script.js"></script>

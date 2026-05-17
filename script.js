@@ -1,75 +1,68 @@
-const questions = [
-    {
-        text: "What is the capital of Poland?",
-        options: ["Berlin", "Warsaw", "Paris", "Rome"],
-        correct: 1
-    },
-    {
-        text: "Which planet is known as the Red Planet?",
-        options: ["Earth", "Mars", "Jupiter", "Venus"],
-        correct: 1
-    },
-    {
-        text: "What is 10 + 7?",
-        options: ["10", "17", "9", "16"],
-        correct: 1
-    },
-    {
-        text: "Which language runs in a web browser?",
-        options: ["Python", "C++", "JavaScript", "Java"],
-        correct: 2
-    },
-    {
-        text: "Who wrote 'Harry Potter'?",
-        options: ["Tolkien", "Rowling", "Martin", "Shakespeare"],
-        correct: 1
-    }
+const quizData = [
+    { text: "Which ocean is the largest?", options: ["Atlantic", "Indian", "Pacific", "Arctic"], correct: 2 },
+    { text: "Where do wild ducks NOT live?", options: ["Africa", "Antarctica", "Australia", "Europe"], correct: 1 },
+    { text: "Which human organ never rests?", options: ["Brain", "Lungs", "Stomach", "Heart"], correct: 3 },
+    { text: "Which metal is liquid at room temperature?", options: ["Mercury", "Gold", "Iron", "Zinc"], correct: 0 },
+    { text: "What did Cinderella lose at the ball?", options: ["Ring", "Slipper", "Necklace", "Glove"], correct: 1 },
+    { text: "Is a duck a bird?", options: ["Yes", "No"], correct: 0 }
 ];
 
-let currentIndex = 0; //which question you are on
-let score = 0;        //how many correct answers user got
-
+let currentIndex = 0;
+let score = 0;
 
 function loadQuestion() {
-
-    let q = questions[currentIndex];
-
+    let q = quizData[currentIndex];
     document.getElementById("question").textContent = q.text;
+    document.getElementById("progress").textContent = "Question " + (currentIndex + 1) + " / " + quizData.length;
+    document.getElementById("inlineDuckContainer").classList.remove("run");
 
-    let currentNum = currentIndex + 1;
-    document.getElementById("progress").textContent = "Question " + currentNum + " / " + questions.length;
+    const answersContainer = document.getElementById("answers");
+    answersContainer.innerHTML = ""; // Очищаем контейнер перед загрузкой новых кнопок
 
-    for (let i = 0; i < 4; i++) {
-        let btn = document.getElementById("btn" + i);
-        
-        btn.textContent = q.options[i]; 
-        btn.disabled = false;          
-        btn.className = "answer";  
-    }
+    // вставляем текст ответа, включаем кнопку, сбрасываем цвета (удаляем красный/зеленый)
+    // Теперь создаем ровно столько кнопок, сколько вариантов в текущем вопросе
+    q.options.forEach((optionText, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = optionText;
+        btn.className = "answer";
+        btn.onclick = () => checkAnswer(index);
+        answersContainer.appendChild(btn);
+    });
+
     document.getElementById("nextBtn").style.display = "none";
 }
 
-function check(userChoice) {
-    let q = questions[currentIndex];
-    let correctChoice = q.correct;
+function checkAnswer(userChoice) {
+    let q = quizData[currentIndex];
+    let duck = document.getElementById("inlineDuckContainer");
+    let feedback = document.getElementById("inlineFeedbackText");
+    
+    // Находим все созданные кнопки, чтобы их отключить
+    const buttons = document.querySelectorAll(".answer");
+    buttons.forEach(btn => btn.disabled = true);
 
-    for (let i = 0; i < 4; i++) {
-        document.getElementById("btn" + i).disabled = true;
-    }
-    if (userChoice === correctChoice) {
-        document.getElementById("btn" + userChoice).classList.add("correct");
-        score = score + 1;
+    if (userChoice === q.correct) {
+        buttons[userChoice].classList.add("correct");
+        score++;
         document.getElementById("score").textContent = "Score: " + score;
+        feedback.textContent = "Quack! Correct!";
+        feedback.style.color = "#22c55e";
     } else {
-        document.getElementById("btn" + userChoice).classList.add("wrong");
-        document.getElementById("btn" + correctChoice).classList.add("correct");
+        buttons[userChoice].classList.add("wrong");
+        buttons[q.correct].classList.add("correct");
+        feedback.textContent = "Oh no! Wrong!";
+        feedback.style.color = "#ef4444"; 
     }
-    document.getElementById("nextBtn").style.display = "block";
+    duck.classList.add("run");
+    setTimeout(function() {
+        document.getElementById("nextBtn").style.display = "block";
+    }, 4500); 
 }
 
+// NEXT
 document.getElementById("nextBtn").onclick = function() {
-    currentIndex = currentIndex + 1; 
-    if (currentIndex < questions.length) {
+    currentIndex++;
+    if (currentIndex < quizData.length) {
         loadQuestion();
     } else {
         showFinal();
@@ -77,9 +70,21 @@ document.getElementById("nextBtn").onclick = function() {
 };
 
 function showFinal() {
-    document.getElementById("question").textContent = "🎉 Quiz Finished!";
-    document.getElementById("answers").innerHTML = "<h3>Your score: " + score + " / " + questions.length + "</h3>";
+    document.getElementById("question").textContent = "🎉 Finished!";
+    document.getElementById("answers").style.display = "none";
+    document.querySelector(".card").innerHTML = `
+        <div class="top-bar">
+            <span>Done</span>
+            <span>Score: ${score}</span>
+        </div>
+        <h2 style="margin-top: 40px;">🎉 Quiz Finished!</h2>
+        <h3 style="margin-bottom: 20px;">Your score: ${score} / ${quizData.length}</h3>
+        
+        <div id="finalDuckContainer" class="final-duck-card-container active">
+            <img src="dancingduck.gif" alt="Dancing Duck" style="height: 180px;">
+        </div>
+    `;
     document.getElementById("nextBtn").style.display = "none";
-    document.getElementById("progress").textContent = "Done";
 }
+
 loadQuestion();
