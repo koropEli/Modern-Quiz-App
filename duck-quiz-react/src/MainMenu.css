@@ -1,0 +1,82 @@
+
+.main-menu-layout {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-left: 10%;
+}
+
+
+.menu-box {
+  text-align: left;
+  background: rgba(10, 10, 10, 0.82); 
+  padding: 45px 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8); 
+}
+
+.menu-box .game-title {
+  font-family: 'Cinzel', serif;
+  font-size: 38px;
+  font-weight: 900;
+  color: #cca43b;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.menu-box .game-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: #888;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 35px;
+}
+
+.menu-box .menu-buttons-list {
+  display: flex;
+  flex-direction: column; 
+  gap: 14px;
+}
+
+
+.menu-box .menu-btn {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ccc;
+  padding: 16px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.menu-box .menu-btn:hover:not(:disabled) {
+  background: rgba(204, 164, 59, 0.12);
+  border-color: #cca43b; 
+  color: #fff;
+  transform: translateX(4px);
+}
+
+/* Стили для заблокированных кнопками глав (если бы они были) */
+/* .menu-box .menu-btn:disabled {
+  opacity: 0.3; /* Кнопка становится прозрачной 
+  cursor: not-allowed; /* Курсор мыши меняется на запрещающий знак 
+} */
+ 
+ .menu-box .marker {
+  color: #cca43b;
+  margin-right: 12px;
+} 

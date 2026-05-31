@@ -1,223 +1,211 @@
-import { useState, useMemo, useEffect } from "react";
-import "./App.css";
-
-
-const quizData = [
-  {
-    text: "Which ocean is the largest?",
-    options: ["Atlantic", "Indian", "Pacific", "Arctic"],
-    correct: 2,
-  },
-  {
-    text: "Where do wild ducks NOT live?",
-    options: ["Africa", "Antarctica", "Australia", "Europe"],
-    correct: 1,
-  },
-  {
-    text: "Which human organ never rests?",
-    options: ["Brain", "Lungs", "Stomach", "Heart"],
-    correct: 3,
-  },
-  {
-    text: "Which metal is liquid at room temperature?",
-    options: ["Mercury", "Gold", "Iron", "Zinc"],
-    correct: 0,
-  },
-  {
-    text: "What did Cinderella lose at the ball?",
-    options: ["Ring", "Slipper", "Necklace", "Glove"],
-    correct: 1,
-  },
-  {
-    text: "Is a duck a bird?",
-    options: ["Yes", "No"],
-    correct: 0,
-  },
-];
-
-
-// reusable component for question text and answer options
-// receives question text and answer options through props
-function Question({ currentQuestion, alterScore }) {
-  const [selected, setSelected] = useState(null);
-  const [showDuck, setShowDuck] = useState(false);
-
-  useEffect(() => {
-    setSelected(null);
-    setShowDuck(false);
-  }, [currentQuestion]);
-
-  function checkAnswer(index) {
-    if (selected !== null) return;
-
-    setSelected(index);
-    setShowDuck(true);
-
-    const isCorrect = index === currentQuestion.correct;
-    alterScore(isCorrect);
-  }
-
-  return (
-    <>
-      <h2>{currentQuestion.text}</h2>
-      <div className="answers">
-        {currentQuestion.options.map((option, index) => (
-          <AnswerButton
-            key={index}
-            option={option}
-            index={index}
-            selected={selected}
-            correct={currentQuestion.correct}
-            checkAnswer={checkAnswer}
-          />
-        ))}
-      </div>
-
-      {showDuck && (
-        <div className="inline-duck-container run">
-          <img
-            src="/feedbackduck.gif"
-            className="inline-duck-gif"
-            alt="Duck Feedback"
-          />
-          <span
-            className={`inline-feedback-text ${
-              selected === currentQuestion.correct
-                ? "correct-text"
-                : "wrong-text"
-            }`}
-          >
-            {selected === currentQuestion.correct
-              ? "Quack! Correct!"
-              : "Oh no! Wrong!"}
-          </span>
-        </div>
-      )}
-    </>
-  );
-}
-
-
-// reusable component for answer button
-// receives all needed data through props
-function AnswerButton({
-  option,
-  index,
-  selected,
-  correct,
-  checkAnswer,
-}) {
-  return (
-    <button
-      // dynamic classes for correct/wrong answers
-      className={`answer 
-      ${
-        selected !== null && index === correct
-          ? "correct"
-          : ""
-      }
-      ${
-        selected === index && index !== correct
-          ? "wrong"
-          : ""
-      }`}
-      
-      // disable buttons after selecting answer
-      disabled={selected !== null}
-
-      // send selected answer index
-      onClick={() => checkAnswer(index)}
-    >
-      {option}
-    </button>
-  );
-}
-
+import { useState, useMemo } from "react";
+import { levelsData } from "./levelsData";
+import ChapterVideo from "./ChapterVideo";
+import "./index.css";
+import "./MainMenu.css";
+import "./ChapterOne.css";
 
 function App() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [screen, setScreen] = useState("menu"); 
+  const [unlockedLevels, setUnlockedLevels] = useState([1/*, 2, 3, 4*/]);
+  const [currentLevel, setCurrentLevel] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0); // индекс текущего вопроса в массиве вопросов
   const [score, setScore] = useState(0);
+  const [answered, setAnswered] = useState(false);//(true/false). Предотвращает повторные клики
+  const [selectedChoiceIdx, setSelectedChoiceIdx] = useState(null);
 
-  // tracks whether current question has been answered (for Next button)
-  const [answered, setAnswered] = useState(false);
+  // currentQuestion возвращает объект текущего вопроса (текст и варианты ответов)
+  const currentQuestion = useMemo(() => {
+    if (!currentLevel) return null; 
+    return currentLevel.questions[currentIndex]; 
+  }, [currentLevel, currentIndex]);
 
-  // memoized current question object
-  const currentQuestion = useMemo(() => quizData[currentIndex], [currentIndex]);
 
 
-  // called by Question after an answer is selected
-  function alterScore(isCorrect) {
-    if (isCorrect) setScore((s) => s + 1);
+
+
+
+
+  function handleSelectLevel(level) {
+    setCurrentLevel(level); 
+    if (level.video) {
+      setScreen("video");
+    } else {
+      setScreen("story");
+    }
+  }
+
+  function handleVideoFinished() {
+    setScreen("story");
+  }
+
+  function startQuiz() {
+    setCurrentIndex(0);
+    setScore(0);
+    setAnswered(false);
+    setSelectedChoiceIdx(null);
+    setScreen("quiz");
+  }
+
+  function handleQuizAnswer(index) {
+    if (answered) return;
+    setSelectedChoiceIdx(index);
+    
+    if (index === currentQuestion.correct) {
+      setScore((s) => s + 1);
+    }
     setAnswered(true);
   }
 
-
-  function nextQuestion() {
-    setCurrentIndex((prevIndex) => prevIndex + 1);
+  function handleNext() {
+    setCurrentIndex((prev) => prev + 1);
     setAnswered(false);
+    setSelectedChoiceIdx(null); // сбрасываем выбор ответа для следующего вопроса
   }
 
+  const currentBackground = useMemo(() => {
+    if (screen === "menu") return "/mainMenuBackground.jpg"; 
+    if (currentLevel) {
+      if (currentLevel.id === 1 && (screen === "story" || screen === "quiz")) {
+        return "/backgroundChapter1.jpg";
+      }
+      return "/mainMenuBackground.jpg";
+    }
+    return "/mainMenuBackground.jpg";
+  }, [screen, currentLevel]);
 
-  // final screen after all questions
-  if (currentIndex >= quizData.length) {
+
+
+
+
+// Early Return
+  if (screen === "video" && currentLevel) {
     return (
-      <div className="app">
-        <div className="card">
-          <div className="top-bar">
-            <span>Done</span>
-            <span>
-              Score: {score} / {quizData.length}
-            </span>
-          </div>
-          <h1>🎉 Quiz Finished!</h1>
-          <h2>
-            Your score: {score} / {quizData.length}
-          </h2>
-
-          <div className="final-duck-card-container active">
-            <img
-              src="/dancingduck.gif"
-              alt="Dancing Duck"
-              className="duck"
-            />
-          </div>
-        </div>
-      </div>
+      <ChapterVideo 
+        videoSrc={currentLevel.video}
+        onVideoEnd={handleVideoFinished}
+      />
     );
   }
 
+  
+
+
+
   return (
-    <div className="app">
-
-      <header className="header">
-        <h1>🧠 Knowledge Quiz</h1>
-        <p>Test your general knowledge</p>
-      </header>
-
-      <div className="card">
-        <div className="top-bar">
-          <span>
-            Question {currentIndex + 1} / {quizData.length}
-          </span>
-          <span>Score: {score}</span>
+    <div 
+      className="game-app-container" 
+      style={{ backgroundImage: `url(${currentBackground})` }}
+    >
+      
+      {screen === "menu" && (
+        <div className="main-menu-layout"> 
+          <div className="menu-box">
+            <h1 className="game-title">Duck Throne</h1>
+            <p className="game-subtitle">The Chronicles of Ascension</p>
+            <div className="menu-buttons-list">
+              {levelsData.map((level) => {
+                // Проверяем, находится ли id уровня в массиве unlockedLevels
+                const isUnlocked = unlockedLevels.includes(level.id);
+                return (
+                  <button 
+                    key={level.id} 
+                    className="menu-btn" 
+                    disabled={!isUnlocked} 
+                    onClick={() => handleSelectLevel(level)}
+                  >
+                    <span><span className="marker">◆</span>{level.title}</span>
+                    {/* {!isUnlocked && <span className="lock-icon">🔒</span>} */}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
-
-        {/* reuVable question component */}
-        <Question currentQuestion={currentQuestion} alterScore={alterScore} />
+      )}
 
 
-        {/* next question button */}
-        {answered && (
-          <button id="nextBtn" onClick={nextQuestion}>
-            Next Question ➜
-          </button>
-        )}
-      </div>
 
-      <footer>
-        <p className="footer-text">Built for Fun</p>
-      </footer>
 
+      {screen === "story" && currentLevel && (
+        <div className="chapter-one-layout">
+          <div className="ch1-screen-wrapper">
+            <button className="ch1-back-btn" onClick={() => setScreen("menu")}>🡨 Back to Map</button>
+            <div className="ch1-card"> 
+              <div className="top-bar"><span>Prologue</span><span>Status: Ready</span></div>
+              <h1 className="story-title">{currentLevel.title}</h1>
+              <p className="story-text">{currentLevel.story}</p>
+              <button className="ch1-action-btn" onClick={startQuiz}>Begin Trial ➜</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+
+
+      {screen === "quiz" && currentLevel && (
+        <div className="chapter-one-layout"> 
+          <div className="ch1-screen-wrapper">
+            <button className="ch1-back-btn" onClick={() => setScreen("menu")}>🡨 Abandon Mission</button>
+            <div className="ch1-card">
+              {currentIndex >= currentLevel.questions.length ? (
+                <>
+                  <div className="top-bar">
+                    <span>Victory</span>
+                    <span>Score: {score} / {currentLevel.questions.length}</span>
+                  </div>
+                  <h1 style={{ color: "#fff", marginBottom: "15px" }}>Chapter Cleared!</h1>
+                  <div style={{ textAlign: "center", margin: "20px 0" }}>
+                    <img src="/dancingduck.gif" alt="Duck" style={{ width: "100px" }} />
+                  </div>
+                  <button className="ch1-action-btn" onClick={() => setScreen("menu")}>Continue Journey ➜</button>
+                </>
+              ) : (
+                /* РЕНДЕРИНГ ВОПРОСА И ОТВЕТОВ */
+                <>
+                  <div className="top-bar">
+                    <span>Question {currentIndex + 1} / {currentLevel.questions.length}</span>
+                  </div>
+                  <h2>{currentQuestion.text}</h2>
+                  <div className="ch1-answers-grid">
+                    {currentQuestion.options.map((option, idx) => {
+                      const isCorrect = idx === currentQuestion.correct; 
+                      const isSelected = selectedChoiceIdx === idx;
+                      
+                      return (
+                        <button 
+                          key={idx} 
+                          
+                          className={`ch1-answer-btn ${answered && isCorrect ? "correct" : ""} ${isSelected && !isCorrect ? "wrong" : ""}`} 
+                          disabled={answered} 
+                          onClick={() => handleQuizAnswer(idx)}
+                        >
+                          {option}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+
+
+                  {answered && (
+                    <div className="ch1-duck-feedback">
+                      <img src="/feedbackduck.gif" className="ch1-duck-gif" alt="Feedback" />
+                      <span className={selectedChoiceIdx === currentQuestion.correct ? "ch1-correct-txt" : "ch1-wrong-txt"}>
+                        {selectedChoiceIdx === currentQuestion.correct ? "Quack! Perfect Blueprint!" : "Oh no! Incorrect specification!"}
+                      </span>
+                    </div>
+                  )}
+                  {answered && (
+                    <button className="ch1-action-btn" onClick={handleNext}>Next ➜</button>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
