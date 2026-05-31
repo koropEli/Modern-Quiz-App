@@ -4,10 +4,13 @@ import ChapterVideo from "./ChapterVideo";
 import "./index.css";
 import "./MainMenu.css";
 import "./ChapterOne.css";
+import "./chapterTwo.css";
+import "./chapterThree.css";
+import "./chapterFour.css";
 
 function App() {
   const [screen, setScreen] = useState("menu"); 
-  const [unlockedLevels, setUnlockedLevels] = useState([1/*, 2, 3, 4*/]);
+  const [unlockedLevels, setUnlockedLevels] = useState([1, 2, 3, 4]);
   const [currentLevel, setCurrentLevel] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0); // индекс текущего вопроса в массиве вопросов
   const [score, setScore] = useState(0);
@@ -19,12 +22,6 @@ function App() {
     if (!currentLevel) return null; 
     return currentLevel.questions[currentIndex]; 
   }, [currentLevel, currentIndex]);
-
-
-
-
-
-
 
   function handleSelectLevel(level) {
     setCurrentLevel(level); 
@@ -74,10 +71,6 @@ function App() {
     return "/mainMenuBackground.jpg";
   }, [screen, currentLevel]);
 
-
-
-
-
 // Early Return
   if (screen === "video" && currentLevel) {
     return (
@@ -87,10 +80,6 @@ function App() {
       />
     );
   }
-
-  
-
-
 
   return (
     <div 
@@ -115,7 +104,7 @@ function App() {
                     onClick={() => handleSelectLevel(level)}
                   >
                     <span><span className="marker">◆</span>{level.title}</span>
-                    {/* {!isUnlocked && <span className="lock-icon">🔒</span>} */}
+                    {!isUnlocked && <span className="lock-icon">🔒</span>}
                   </button>
                 );
               })}
@@ -124,84 +113,80 @@ function App() {
         </div>
       )}
 
-
-
-
       {screen === "story" && currentLevel && (
-        <div className="chapter-one-layout">
-          <div className="ch1-screen-wrapper">
-            <button className="ch1-back-btn" onClick={() => setScreen("menu")}>🡨 Back to Map</button>
-            <div className="ch1-card"> 
-              <div className="top-bar"><span>Prologue</span><span>Status: Ready</span></div>
-              <h1 className="story-title">{currentLevel.title}</h1>
-              <p className="story-text">{currentLevel.story}</p>
-              <button className="ch1-action-btn" onClick={startQuiz}>Begin Trial ➜</button>
+        <div className={currentLevel.themeClass}>
+          <div className="chapter-one-layout">
+            <div className="ch1-screen-wrapper">
+              <button className="ch1-back-btn" onClick={() => setScreen("menu")}>🡨 Back to Map</button>
+              <div className="ch1-card"> 
+                <div className="top-bar"><span>Prologue</span><span>Status: Ready</span></div>
+                <h1 className="story-title">{currentLevel.title}</h1>
+                <p className="story-text">{currentLevel.story}</p>
+                <button className="ch1-action-btn" onClick={startQuiz}>Begin Trial ➜</button>
+              </div>
             </div>
           </div>
         </div>
       )}
 
-
-
-
       {screen === "quiz" && currentLevel && (
-        <div className="chapter-one-layout"> 
-          <div className="ch1-screen-wrapper">
-            <button className="ch1-back-btn" onClick={() => setScreen("menu")}>🡨 Abandon Mission</button>
-            <div className="ch1-card">
-              {currentIndex >= currentLevel.questions.length ? (
-                <>
-                  <div className="top-bar">
-                    <span>Victory</span>
-                    <span>Score: {score} / {currentLevel.questions.length}</span>
-                  </div>
-                  <h1 style={{ color: "#fff", marginBottom: "15px" }}>Chapter Cleared!</h1>
-                  <div style={{ textAlign: "center", margin: "20px 0" }}>
-                    <img src="/dancingduck.gif" alt="Duck" style={{ width: "100px" }} />
-                  </div>
-                  <button className="ch1-action-btn" onClick={() => setScreen("menu")}>Continue Journey ➜</button>
-                </>
-              ) : (
-                /* РЕНДЕРИНГ ВОПРОСА И ОТВЕТОВ */
-                <>
-                  <div className="top-bar">
-                    <span>Question {currentIndex + 1} / {currentLevel.questions.length}</span>
-                  </div>
-                  <h2>{currentQuestion.text}</h2>
-                  <div className="ch1-answers-grid">
-                    {currentQuestion.options.map((option, idx) => {
-                      const isCorrect = idx === currentQuestion.correct; 
-                      const isSelected = selectedChoiceIdx === idx;
-                      
-                      return (
-                        <button 
-                          key={idx} 
-                          
-                          className={`ch1-answer-btn ${answered && isCorrect ? "correct" : ""} ${isSelected && !isCorrect ? "wrong" : ""}`} 
-                          disabled={answered} 
-                          onClick={() => handleQuizAnswer(idx)}
-                        >
-                          {option}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-
-
-                  {answered && (
-                    <div className="ch1-duck-feedback">
-                      <img src="/feedbackduck.gif" className="ch1-duck-gif" alt="Feedback" />
-                      <span className={selectedChoiceIdx === currentQuestion.correct ? "ch1-correct-txt" : "ch1-wrong-txt"}>
-                        {selectedChoiceIdx === currentQuestion.correct ? "Quack! Perfect Blueprint!" : "Oh no! Incorrect specification!"}
-                      </span>
+        <div className={currentLevel.themeClass}>
+          <div className="chapter-one-layout"> 
+            <div className="ch1-screen-wrapper">
+              <button className="ch1-back-btn" onClick={() => setScreen("menu")}>🡨 Abandon Mission</button>
+              <div className="ch1-card">
+                {currentIndex >= currentLevel.questions.length ? (
+                  <>
+                    <div className="top-bar">
+                      <span>Victory</span>
+                      <span>Score: {score} / {currentLevel.questions.length}</span>
                     </div>
-                  )}
-                  {answered && (
-                    <button className="ch1-action-btn" onClick={handleNext}>Next ➜</button>
-                  )}
-                </>
-              )}
+                    <h1 style={{ color: "#fff", marginBottom: "15px" }}>Chapter Cleared!</h1>
+                    <div style={{ textAlign: "center", margin: "20px 0" }}>
+                      <img src="/dancingduck.gif" alt="Duck" style={{ width: "100px" }} />
+                    </div>
+                    <button className="ch1-action-btn" onClick={() => setScreen("menu")}>Continue Journey ➜</button>
+                  </>
+                ) : (
+                  /* РЕНДЕРИНГ ВОПРОСА И ОТВЕТОВ */
+                  <>
+                    <div className="top-bar">
+                      <span>Question {currentIndex + 1} / {currentLevel.questions.length}</span>
+                    </div>
+                    <h2>{currentQuestion.text}</h2>
+                    <div className="ch1-answers-grid">
+                      {currentQuestion.options.map((option, idx) => {
+                        const isCorrect = idx === currentQuestion.correct; 
+                        const isSelected = selectedChoiceIdx === idx;
+                        
+                        return (
+                          <button 
+                            key={idx} 
+                            
+                            className={`ch1-answer-btn ${answered && isCorrect ? "correct" : ""} ${isSelected && !isCorrect ? "wrong" : ""}`} 
+                            disabled={answered} 
+                            onClick={() => handleQuizAnswer(idx)}
+                          >
+                            {option}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {answered && (
+                      <div className="ch1-duck-feedback">
+                        <img src="/feedbackduck.gif" className="ch1-duck-gif" alt="Feedback" />
+                        <span className={selectedChoiceIdx === currentQuestion.correct ? "ch1-correct-txt" : "ch1-wrong-txt"}>
+                          {selectedChoiceIdx === currentQuestion.correct ? "Quack! Perfect Blueprint!" : "Oh no! Incorrect specification!"}
+                        </span>
+                      </div>
+                    )}
+                    {answered && (
+                      <button className="ch1-action-btn" onClick={handleNext}>Next ➜</button>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -15,34 +15,6 @@ export const levelsData = [
       { text: "Cover letter purpose?", options: ["Copy CV text", "Explain why you fit", "Demand high pay", "Write a poem"], correct: 1 },
       { text: "Safest file format?", options: ["Word (.docx)", "Photoshop (.psd)", "PDF (.pdf)", "Text (.txt)"], correct: 2 }
     ],
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-  /* =========================================================================
-     ГЛАВЫ 2, 3 И 4 ЗАКОММЕНТИРОВАНЫ ПО ТРЕБОВАНИЮ ЗАДАЧИ
-     =========================================================================
   },
   {
     id: 2,
@@ -96,6 +68,5 @@ export const levelsData = [
       { id: "capitalType", type: "choice", text: "Where to build the capital?", options: ["Golden Citadel", "Iron Bunker"] },
       { id: "grandStrategy", type: "choice", text: "Ultimate imperial focus:", options: ["Total Industry", "Cosmic Ascension"] }
     ]
-    ========================================================================= */
   }
 ];

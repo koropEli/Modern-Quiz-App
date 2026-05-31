@@ -70,11 +70,11 @@
   transform: translateX(4px);
 }
 
-/* Стили для заблокированных кнопками глав (если бы они были) */
-/* .menu-box .menu-btn:disabled {
-  opacity: 0.3; /* Кнопка становится прозрачной 
-  cursor: not-allowed; /* Курсор мыши меняется на запрещающий знак 
-} */
+
+ .menu-box .menu-btn:disabled {
+  opacity: 0.3; 
+  cursor: not-allowed; 
+} 
  
  .menu-box .marker {
   color: #cca43b;
