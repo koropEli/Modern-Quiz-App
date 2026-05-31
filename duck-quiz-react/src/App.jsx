@@ -1,77 +1,50 @@
 import { useState, useMemo } from "react";
 import { levelsData } from "./levelsData";
 import ChapterVideo from "./ChapterVideo";
+
+// Импортируем компоненты игровых глав
+import ChapterOne from "./chapters/ChapterOne/ChapterOne";
+import ChapterTwo from "./chapters/ChapterTwo/ChapterTwo";
+// import ChapterThree from "./chapters/ChapterThree/ChapterThree";
+// import ChapterFour from "./chapters/ChapterFour/ChapterFour";
+
 import "./index.css";
+import "./App.css";
 import "./MainMenu.css";
-import "./ChapterOne.css";
-import "./chapterTwo.css";
-import "./chapterThree.css";
-import "./chapterFour.css";
 
 function App() {
+  // Переключатель экранов. Может принимать значения: "menu", "video", "story"
   const [screen, setScreen] = useState("menu"); 
-  const [unlockedLevels, setUnlockedLevels] = useState([1, 2, 3, 4]);
+  // Массив ID уровней, которые открыты для нажатия. Пока открыты 1 и 2 главы
+  const [unlockedLevels] = useState([1, 2]);
+  // Хранит объект текущей выбранной главы (напр. levelsData[0])
   const [currentLevel, setCurrentLevel] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0); // индекс текущего вопроса в массиве вопросов
-  const [score, setScore] = useState(0);
-  const [answered, setAnswered] = useState(false);//(true/false). Предотвращает повторные клики
-  const [selectedChoiceIdx, setSelectedChoiceIdx] = useState(null);
 
-  // currentQuestion возвращает объект текущего вопроса (текст и варианты ответов)
-  const currentQuestion = useMemo(() => {
-    if (!currentLevel) return null; 
-    return currentLevel.questions[currentIndex]; 
-  }, [currentLevel, currentIndex]);
-
+  // Функция срабатывает при выборе главы в меню
   function handleSelectLevel(level) {
-    setCurrentLevel(level); 
+    setCurrentLevel(level); // Запоминаем выбранную главу
     if (level.video) {
-      setScreen("video");
+      setScreen("video"); // Если у уровня прописано видео — включаем плеер
     } else {
-      setScreen("story");
+      setScreen("story"); // Иначе сразу переходим к карточке пролога
     }
   }
 
+  // Функция вызывается, когда видеоролик просмотрен или пропущен
   function handleVideoFinished() {
-    setScreen("story");
+    setScreen("story"); // Переключаем игрока на экран текстового пролога главы
   }
 
-  function startQuiz() {
-    setCurrentIndex(0);
-    setScore(0);
-    setAnswered(false);
-    setSelectedChoiceIdx(null);
-    setScreen("quiz");
-  }
-
-  function handleQuizAnswer(index) {
-    if (answered) return;
-    setSelectedChoiceIdx(index);
-    
-    if (index === currentQuestion.correct) {
-      setScore((s) => s + 1);
-    }
-    setAnswered(true);
-  }
-
-  function handleNext() {
-    setCurrentIndex((prev) => prev + 1);
-    setAnswered(false);
-    setSelectedChoiceIdx(null); // сбрасываем выбор ответа для следующего вопроса
-  }
-
+  // Специфический хук useMemo оптимизирует смену фоновой картинки всего приложения
   const currentBackground = useMemo(() => {
-    if (screen === "menu") return "/mainMenuBackground.jpg"; 
+    if (screen === "menu") return "/mainMenuBackground.jpg"; // Обои для главного меню
     if (currentLevel) {
-      if (currentLevel.id === 1 && (screen === "story" || screen === "quiz")) {
-        return "/backgroundChapter1.jpg";
-      }
-      return "/mainMenuBackground.jpg";
+      return currentLevel.quizBg || "/mainMenuBackground.jpg"; // Обои выбранной главы
     }
     return "/mainMenuBackground.jpg";
-  }, [screen, currentLevel]);
+  }, [screen, currentLevel]); // Пересчитывать картинку только при изменении экрана или уровня
 
-// Early Return
+  // УСЛОВИЕ 1: Если включен режим видео и уровень выбран — рендерим только видеоплеер
   if (screen === "video" && currentLevel) {
     return (
       <ChapterVideo 
@@ -81,12 +54,14 @@ function App() {
     );
   }
 
+  // ОСНОВНОЙ РЕНДЕР ПРИЛОЖЕНИЯ
   return (
     <div 
       className="game-app-container" 
-      style={{ backgroundImage: `url(${currentBackground})` }}
+      style={{ backgroundImage: `url(${currentBackground})` }} // Привязываем динамический фон
     >
       
+      {/* ЭКРАН: ГЛАВНОЕ МЕНЮ (показывается только если screen === "menu") */}
       {screen === "menu" && (
         <div className="main-menu-layout"> 
           <div className="menu-box">
@@ -94,14 +69,14 @@ function App() {
             <p className="game-subtitle">The Chronicles of Ascension</p>
             <div className="menu-buttons-list">
               {levelsData.map((level) => {
-                // Проверяем, находится ли id уровня в массиве unlockedLevels
+                // Проверяем, открыт ли уровень для игрока
                 const isUnlocked = unlockedLevels.includes(level.id);
                 return (
                   <button 
                     key={level.id} 
                     className="menu-btn" 
-                    disabled={!isUnlocked} 
-                    onClick={() => handleSelectLevel(level)}
+                    disabled={!isUnlocked} // Блокируем кнопку, если уровень закрыт
+                    onClick={() => handleSelectLevel(level)} // Запуск логики выбора
                   >
                     <span><span className="marker">◆</span>{level.title}</span>
                     {!isUnlocked && <span className="lock-icon">🔒</span>}
@@ -113,83 +88,30 @@ function App() {
         </div>
       )}
 
-      {screen === "story" && currentLevel && (
-        <div className={currentLevel.themeClass}>
-          <div className="chapter-one-layout">
-            <div className="ch1-screen-wrapper">
-              <button className="ch1-back-btn" onClick={() => setScreen("menu")}>🡨 Back to Map</button>
-              <div className="ch1-card"> 
-                <div className="top-bar"><span>Prologue</span><span>Status: Ready</span></div>
-                <h1 className="story-title">{currentLevel.title}</h1>
-                <p className="story-text">{currentLevel.story}</p>
-                <button className="ch1-action-btn" onClick={startQuiz}>Begin Trial ➜</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ЭКРАН: ИГРОВЫЕ ГЛУБИНЫ КВИЗА (Показывается, если мы вышли из главного меню) */}
+      {screen !== "menu" && currentLevel && (
+        <>
+          {/* Если ID уровня равен 1 — рендерим первую главу */}
+          {currentLevel.id === 1 && (
+            <ChapterOne levelData={currentLevel} onLeave={() => setScreen("menu")} />
+          )}
+          
+          {/* Если ID уровня равен 2 — рендерим вторую главу */}
+          {currentLevel.id === 2 && (
+            <ChapterTwo levelData={currentLevel} onLeave={() => setScreen("menu")} />
+          )}
 
-      {screen === "quiz" && currentLevel && (
-        <div className={currentLevel.themeClass}>
-          <div className="chapter-one-layout"> 
-            <div className="ch1-screen-wrapper">
-              <button className="ch1-back-btn" onClick={() => setScreen("menu")}>🡨 Abandon Mission</button>
-              <div className="ch1-card">
-                {currentIndex >= currentLevel.questions.length ? (
-                  <>
-                    <div className="top-bar">
-                      <span>Victory</span>
-                      <span>Score: {score} / {currentLevel.questions.length}</span>
-                    </div>
-                    <h1 style={{ color: "#fff", marginBottom: "15px" }}>Chapter Cleared!</h1>
-                    <div style={{ textAlign: "center", margin: "20px 0" }}>
-                      <img src="/dancingduck.gif" alt="Duck" style={{ width: "100px" }} />
-                    </div>
-                    <button className="ch1-action-btn" onClick={() => setScreen("menu")}>Continue Journey ➜</button>
-                  </>
-                ) : (
-                  /* РЕНДЕРИНГ ВОПРОСА И ОТВЕТОВ */
-                  <>
-                    <div className="top-bar">
-                      <span>Question {currentIndex + 1} / {currentLevel.questions.length}</span>
-                    </div>
-                    <h2>{currentQuestion.text}</h2>
-                    <div className="ch1-answers-grid">
-                      {currentQuestion.options.map((option, idx) => {
-                        const isCorrect = idx === currentQuestion.correct; 
-                        const isSelected = selectedChoiceIdx === idx;
-                        
-                        return (
-                          <button 
-                            key={idx} 
-                            
-                            className={`ch1-answer-btn ${answered && isCorrect ? "correct" : ""} ${isSelected && !isCorrect ? "wrong" : ""}`} 
-                            disabled={answered} 
-                            onClick={() => handleQuizAnswer(idx)}
-                          >
-                            {option}
-                          </button>
-                        );
-                      })}
-                    </div>
+          {/* Комментарии к 3 и 4 главе не удалены, они скрыты внутри условий */}
+          {/*
+          {currentLevel.id === 3 && (
+            <ChapterThree levelData={currentLevel} onLeave={() => setScreen("menu")} />
+          )}
 
-                    {answered && (
-                      <div className="ch1-duck-feedback">
-                        <img src="/feedbackduck.gif" className="ch1-duck-gif" alt="Feedback" />
-                        <span className={selectedChoiceIdx === currentQuestion.correct ? "ch1-correct-txt" : "ch1-wrong-txt"}>
-                          {selectedChoiceIdx === currentQuestion.correct ? "Quack! Perfect Blueprint!" : "Oh no! Incorrect specification!"}
-                        </span>
-                      </div>
-                    )}
-                    {answered && (
-                      <button className="ch1-action-btn" onClick={handleNext}>Next ➜</button>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+          {currentLevel.id === 4 && (
+            <ChapterFour levelData={currentLevel} onLeave={() => setScreen("menu")} />
+          )}
+          */}
+        </>
       )}
     </div>
   );

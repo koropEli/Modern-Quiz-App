@@ -1,82 +1,95 @@
-
 .main-menu-layout {
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
   display: flex;
+  justify-content: flex-start; /* Сдвигает меню на левую сторону */
   align-items: center;
-  padding-left: 10%;
+  box-sizing: border-box;
+  padding-left: 6%; /* Идеальный отступ, чтобы не перекрывать утку на троне */
 }
-
 
 .menu-box {
-  text-align: left;
-  background: rgba(10, 10, 10, 0.82); 
+  background: rgba(10, 10, 12, 0.85); /* Глубокий, зловещий угольно-черный цвет */
+  backdrop-filter: blur(12px);
   padding: 45px 40px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  max-width: 480px;
+  border-radius: 12px; /* Более острые, строгие углы в готическом стиле */
+  border: 1px solid rgba(251, 191, 36, 0.15); /* Едва заметная золотая рамка */
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.6);
   width: 100%;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8); 
+  max-width: 420px;
 }
 
-.menu-box .game-title {
+.game-title {
   font-family: 'Cinzel', serif;
-  font-size: 38px;
-  font-weight: 900;
-  color: #cca43b;
-  letter-spacing: 2px;
+  font-size: 34px;
+  color: #d97706; /* Более темное, состаренное золото */
+  margin: 0 0 6px 0;
   text-transform: uppercase;
-  margin-bottom: 5px;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  letter-spacing: 3px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
-.menu-box .game-subtitle {
-  font-family: 'Cinzel', serif;
-  font-size: 12px;
-  color: #888;
-  letter-spacing: 2px;
+.game-subtitle {
+  font-size: 11px;
+  color: #64748b; /* Мрачный серый цвет подзаголовка */
+  margin: 0 0 35px 0;
   text-transform: uppercase;
-  margin-bottom: 35px;
+  letter-spacing: 2px;
 }
 
-.menu-box .menu-buttons-list {
+.menu-buttons-list {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 14px;
 }
 
-
-.menu-box .menu-btn {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #ccc;
-  padding: 16px 22px;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: left;
+.menu-btn {
+  background: rgba(20, 20, 25, 0.6); /* Мрачный темный фон кнопок */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  padding: 15px 20px;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  width: 100%;
 }
 
-.menu-box .menu-btn:hover:not(:disabled) {
-  background: rgba(204, 164, 59, 0.12);
-  border-color: #cca43b; 
+/* ЭФФЕКТ ПРИ НАВЕДЕНИИ: Мрачно-багровое свечение */
+.menu-btn:hover:not(:disabled) {
+  background: #7f1d1d; /* Зловещий кроваво-красный цвет */
   color: #fff;
-  transform: translateX(4px);
+  border-color: #b91c1c;
+  transform: translateX(6px); /* Медленное зловещее выдвижение вправо */
+  box-shadow: 0 0 20px rgba(185, 28, 28, 0.4);
 }
 
+.menu-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  background: #050505;
+  border-color: transparent;
+}
 
- .menu-box .menu-btn:disabled {
-  opacity: 0.3; 
-  cursor: not-allowed; 
-} 
- 
- .menu-box .marker {
-  color: #cca43b;
-  margin-right: 12px;
-} 
+.marker {
+  color: #d97706; /* Золотой маркер */
+  margin-right: 10px;
+  transition: color 0.3s;
+}
+
+.menu-btn:hover .marker {
+  color: #fff; /* При наведении маркер загорается белым вместе с текстом */
+}
+
+.lock-icon {
+  font-size: 12px;
+  opacity: 0.6;
+}

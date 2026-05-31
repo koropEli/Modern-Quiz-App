@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: url('grassbackground.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 0;
+}
+
+.app {
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.card {
+    background: white;
+    padding: 25px 25px 80px 25px; 
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 2;
+    overflow: hidden; 
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+#question {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.answer {
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #f3f4f6;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.answer:hover:not(:disabled) {
+    background: #e5e7eb;
+}
+
+.answer.correct { background: #22c55e !important; color: white; }
+.answer.wrong { background: #ef4444 !important; color: white; }
+
+/* --- Animation --- */
+
+.inline-duck-container {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 10;
+    pointer-events: none; 
+}
+
+.inline-duck-container img {
+    transform: translateX(-320px);
+}
+
+.inline-duck-container.run img {
+    transition: transform 3s linear; 
+    transform: translateX(0); 
+}
+
+.inline-duck-container span {
+    opacity: 0;
+}
+
+.inline-duck-container.run span {
+    opacity: 1;
+    transition: opacity 0.3s;
+    transition-delay: 3s; 
+}
+
+.inline-duck-gif {
+    height: 90px;
+    width: auto;
+}
+
+.inline-feedback-text {
+    font-weight: 600;
+    font-size: 28px; 
+}
+
+.final-duck-card-container {
+    display: none;
+    justify-content: center;
+}
+
+.final-duck-card-container.active {
+    display: flex;
+}
+
+#nextBtn {
+    position: absolute;
+    bottom: 25px;
+    right: 25px; /* Перенесла направо, так привычнее */
+    padding: 12px 25px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    display: none; 
+}

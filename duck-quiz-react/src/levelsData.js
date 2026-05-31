@@ -1,3 +1,4 @@
+// Экспортируем массив данных, чтобы его можно было импортировать в App.jsx
 export const levelsData = [
   {
     id: 1,
@@ -20,8 +21,8 @@ export const levelsData = [
     id: 2,
     title: "Chapter II: Casino Royale",
     story: "Play cards perfectly in the underground casino to win your initial capital.",
-    video: null, 
-    quizBg: "/mainMenuBackground.jpg",
+    video: "/videoChapter2.mp4",
+    quizBg: "/backgroundChapter2.jpg",
     themeClass: "theme-chapter-2",
     questions: [
       { text: "Cards in a standard deck?", options: ["36", "48", "52", "64"], correct: 2 },
@@ -35,13 +36,17 @@ export const levelsData = [
       { text: "Which hand beats a Flush?", options: ["Two Pair", "Straight", "Three of a Kind", "Full House"], correct: 3 },
       { text: "Absolute best poker hand?", options: ["Four of a Kind", "Straight Flush", "Royal Flush", "Full House"], correct: 2 }
     ]
-  },
+  }
+
+  
+  /* Код 3 и 4 главы закомментирован, чтобы сейчас работали только 1 и 2 главы
+  ,
   {
     id: 3,
     title: "Chapter III: The Shadow Don",
     story: "Command your syndicate, deal with rival gangs, and earn absolute loyalty.",
-    video: null,
-    quizBg: "/fff.png",
+    video: "/videoChapter3.mp4",
+    quizBg: "/backgroundChapter3.jpg",
     themeClass: "theme-chapter-3",
     questions: [
       { id: "gangName", type: "text", text: "Name your duck gang:", placeholder: "Enter gang name..." },
@@ -57,8 +62,8 @@ export const levelsData = [
     id: 4,
     title: "Chapter IV: The Imperial Crown",
     story: "Dynamic Text",
-    video: null,
-    quizBg: "/mainMenuBackground.jpg",
+    video: "/videoChapter4.mp4",
+    quizBg: "/backgroundChapter4.jpg",
     themeClass: "theme-chapter-4",
     questions: [
       { id: "kingdomName", type: "text", text: "Name your new Kingdom:", placeholder: "Enter kingdom name..." },
@@ -69,4 +74,5 @@ export const levelsData = [
       { id: "grandStrategy", type: "choice", text: "Ultimate imperial focus:", options: ["Total Industry", "Cosmic Ascension"] }
     ]
   }
+  */
 ];
