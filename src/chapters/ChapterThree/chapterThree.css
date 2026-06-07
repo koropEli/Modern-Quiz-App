@@ -1,207 +1,355 @@
+/* Подключаем стильные игровые шрифты из Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
+
+/* Базовый слой третьей главы */
 .chapter-three-layout {
-  position: fixed !important; 
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  box-sizing: border-box !important;
-  
-  /* Принудительно устанавливаем картинку из твоей папки */
-  background-image: url('/backgroungChapter3.png') !important; 
-  background-size: cover !important;
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
-  background-color: #040814 !important;
-  z-index: 9999 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-color: #030303; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-sizing: border-box;
+  z-index: 10;
+  padding: 20px;
 }
 
-/* Кнопка «Abandon Mission» */
-.ch1-back-btn {
+/* Кнопка Abandon Mission */
+.ch3-back-btn {
   position: absolute;
   top: 30px;
-  left: 40px;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
-  padding: 12px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  left: 30px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  padding: 12px 22px;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 10000;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.ch1-back-btn:hover {
-  background: #0f172a; 
-  color: #38bdf8;
-  border-color: #38bdf8;
+.ch3-back-btn:hover {
+  background: #ef4444;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+  transform: translateY(-2px);
 }
 
-/* ======================================================= */
-/* 🏢 КАРТОЧКА ПРОЛОГА ГЛАВЫ 3 🏢 */
-/* ======================================================= */
+/* ======================================================== */
+/* 👑 ПРОКАЧАННЫЙ КОНТЕЙНЕР ФИНАЛА (ОБНОВЛЕННЫЙ)            */
+/* ======================================================== */
+.ch3-custom-summary-card {
+  background: linear-gradient(145deg, #0a0a0d 0%, #121217 100%);
+  border: 2px solid #ef4444; 
+  /* Мощное неоновое свечение вокруг всей карточки */
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 
+              0 0 30px rgba(239, 68, 68, 0.25),
+              inset 0 0 20px rgba(239, 68, 68, 0.1);
+  border-radius: 24px;
+  width: 95%;
+  max-width: 850px; /* Сделали контейнер значительно шире */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  backdrop-filter: blur(20px);
+  animation: cardGlowPulse 4s infinite alternate;
+}
+
+/* Эффект пульсации для бордера */
+@keyframes cardGlowPulse {
+  0% { border-color: rgba(239, 68, 68, 0.8); box-shadow: 0 0 40px rgba(239, 68, 68, 0.2); }
+  100% { border-color: rgba(239, 68, 68, 1); box-shadow: 0 0 60px rgba(239, 68, 68, 0.35); }
+}
+
+/* Верхняя панель */
+.summary-top-bar {
+  background: rgba(10, 10, 12, 0.8);
+  padding: 20px 35px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.summary-menu-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e4e4e7;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+}
+
+.summary-menu-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Главный контент */
+.summary-content {
+  display: flex;
+  padding: 45px 50px;
+  gap: 50px; /* Больше пространства между текстом и картой */
+  align-items: center;
+}
+
+/* ЛЕВАЯ ЧАСТЬ: ТЕКСТЫ */
+.summary-text-side {
+  flex: 1.2; /* Даем тексту чуть больше веса */
+}
+
+.summary-text-side h2 {
+  font-family: 'Orbitron', sans-serif; /* Футуристичный игровой шрифт */
+  font-size: 38px; /* Заголовок стал крупнее и злее */
+  font-weight: 900;
+  color: #ef4444;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+.summary-status-desc {
+  font-size: 22px; /* Увеличили размер шрифта */
+  font-weight: 500;
+  color: #f4f4f5;
+  margin: 0 0 16px 0;
+  letter-spacing: 0.5px;
+}
+
+.highlight-gang {
+  color: #f59e0b; /* Яркий золотой */
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.summary-style-desc {
+  font-size: 16px;
+  color: #a1a1aa;
+  line-height: 1.6;
+  margin: 0 0 35px 0;
+}
+
+/* Прокачанные бейджи стилей */
+.style-badge {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+}
+
+.style-kind {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid #ef4444;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.style-hard {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.summary-score {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: #52525b;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* 🃏 ПРАВАЯ ЧАСТЬ: МАССИВНАЯ КАРТА */
+.summary-card-side {
+  flex: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-preview-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Сама карта стала гораздо больше и эффектнее */
+.result-duck-card {
+  width: 210px; /* Увеличили со 140px до 210px! */
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85),
+              0 0 25px rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Интерактивный наклон при наведении */
+.card-preview-box:hover .result-duck-card {
+  transform: scale(1.06) rotate(3deg);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9),
+              0 0 35px rgba(239, 68, 68, 0.3);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.card-caption {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: #71717a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.card-preview-box:hover .card-caption {
+  color: #ef4444;
+}
+
+/* ======================================================== */
+/* 📝 ОСТАЛЬНЫЕ СТИЛИ КВИЗА (ДЛЯ СОХРАНЕНИЯ СТРУКТУРЫ)     */
+/* ======================================================== */
 .ch3-prologue-card {
-  background: rgba(10, 15, 30, 0.95) !important; 
-  backdrop-filter: blur(14px) !important;
-  padding: 40px 45px !important;
-  border-radius: 24px !important; 
-  border: 1px solid rgba(56, 189, 248, 0.25) !important; 
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8) !important;
-  width: 100% !important;
-  max-width: 580px !important;
-  box-sizing: border-box !important;
+  background: rgba(15, 15, 18, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
+  padding: 45px 40px;
+  border-radius: 16px;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .ch3-prologue-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 12px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
 }
 
 .prologue-tag {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #94a3b8;
+  color: #ef4444;
+  border-bottom: 2px solid #ef4444;
+  padding-bottom: 2px;
 }
 
 .status-tag {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #38bdf8; 
+  color: #a1a1aa;
 }
 
 .ch3-prologue-title {
-  font-family: 'Cinzel', serif, Georgia, 'Times New Roman';
-  font-size: 32px;
-  color: #ffffff;
-  margin: 0 0 18px 0;
-  font-weight: 700;
-  text-align: left;
+  font-size: 30px;
+  color: #f4f4f5;
+  margin: 0 0 20px 0;
+  font-weight: 800;
 }
 
 .ch3-prologue-description {
+  color: #d4d4d8;
   font-size: 15px;
-  color: #cbd5e1;
   line-height: 1.6;
   margin: 0 0 35px 0;
-  text-align: left;
 }
 
 .ch3-begin-btn {
-  background: #0284c7; 
-  color: #ffffff;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  color: #fff;
   border: none;
-  padding: 16px 0;
+  padding: 15px 30px;
   font-size: 15px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.3s ease;
   width: 100%;
-  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
-  transition: all 0.2s ease;
 }
 
 .ch3-begin-btn:hover {
-  background: #38bdf8;
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
 }
 
-/* ======================================================= */
-/* 📊 ИГРОВОЙ КВИЗ И ПОЛЕ ВВОДА 📊 */
-/* ======================================================= */
 .ch3-quiz-box {
-  background: rgba(8, 14, 28, 0.95) !important;
-  backdrop-filter: blur(12px) !important;
-  padding: 40px !important;
-  border-radius: 14px !important;
-  border: 1px solid rgba(56, 189, 248, 0.2) !important; 
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7) !important;
-  width: 100% !important;
-  max-width: 550px !important;
-  text-align: center !important;
+  background: rgba(15, 15, 18, 0.93);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+  padding: 40px;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 580px;
+  box-sizing: border-box;
 }
 
 .quiz-progress {
+  color: #ef4444;
   font-size: 12px;
-  text-transform: uppercase;
-  color: #38bdf8;
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
 }
 
 .ch3-question-text {
-  font-size: 24px;
-  color: #f8fafc;
+  color: #ffffff;
+  font-size: 22px;
   margin: 0 0 30px 0;
   font-weight: 700;
   line-height: 1.4;
 }
 
-/* Стили для формы ввода имени банды */
 .ch3-text-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 100%;
 }
 
 .ch3-text-input {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(56, 189, 248, 0.3);
-  color: #ffffff;
-  padding: 16px 20px;
+  background: rgba(30, 30, 35, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 15px;
   font-size: 16px;
-  border-radius: 10px;
+  border-radius: 6px;
   outline: none;
-  transition: all 0.2s ease;
-  text-align: center;
 }
 
 .ch3-text-input:focus {
-  border-color: #38bdf8;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+  border-color: #ef4444;
 }
 
 .ch3-submit-input-btn {
-  background: #38bdf8;
-  color: #080e1c;
+  background: #ef4444;
+  color: #fff;
   border: none;
   padding: 14px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
-  text-transform: uppercase;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.ch3-submit-input-btn:hover:not(:disabled) {
-  background: #0ea5e9;
-}
-
-.ch3-submit-input-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* Кнопки тестов */
 .ch3-answers-list {
   display: flex;
   flex-direction: column;
@@ -209,60 +357,69 @@
 }
 
 .ch3-answer-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #cbd5e1;
+  background: rgba(25, 25, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
   padding: 16px 20px;
-  font-size: 15px;
-  font-weight: 500;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
   text-align: left;
+  font-weight: 500;
   transition: all 0.2s ease;
-  width: 100%;
 }
 
 .ch3-answer-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(56, 189, 248, 0.4);
-  color: #fff;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  transform: translateX(3px);
 }
 
 .ch3-answer-btn.correct {
-  background: #16a34a !important; 
-  border-color: #22c55e !important;
-  color: #fff !important;
-}
-
-.ch3-answer-btn.wrong {
-  background: #dc2626 !important; 
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.25) 0%, rgba(0, 0, 0, 0) 100%) !important;
   border-color: #ef4444 !important;
-  color: #fff !important;
+  color: #ef4444 !important;
+  font-weight: 700;
 }
 
 .ch3-answer-btn.disabled {
-  opacity: 0.2;
-  cursor: not-allowed;
+  opacity: 0.35;
 }
 
 .ch3-next-btn {
-  margin-top: 24px;
-  background: #0284c7;
-  color: #ffffff;
+  background: #fff;
+  color: #000;
   border: none;
-  padding: 18px 0; 
-  font-size: 16px;
+  padding: 12px 24px;
+  font-size: 14px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  width: 100%; 
-  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
-  transition: all 0.2s ease;
+  margin-top: 25px;
+  float: right;
 }
 
-.ch3-next-btn:hover {
-  background: #38bdf8;
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+.animation-fade-in {
+  animation: ch3FadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ch3FadeIn {
+  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Адаптивный дизайн для мобильных экранов */
+@media (max-width: 768px) {
+  .summary-content {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 30px;
+    gap: 35px;
+  }
+  .summary-text-side h2 {
+    font-size: 28px;
+  }
+  .result-duck-card {
+    width: 170px;
+  }
 }
