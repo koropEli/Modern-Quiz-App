@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./chapterTwo.css";
+import { progressStorage } from "../../progressStorage";
 
 function ChapterTwo({ levelData, onLeave }) {
   // Состояние: запущен ли сам игровой процесс квиза (false — видим пролог)
@@ -22,6 +23,7 @@ function ChapterTwo({ levelData, onLeave }) {
     if (answerIndex === currentQuestion.correct) {
       setScore((prev) => prev + 1);
     }
+    progressStorage.unlockLevel(3);
   }
 
   function handleNext() {

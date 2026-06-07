@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import "./ChapterOne.css";
+import { progressStorage } from "../../progressStorage";
 
 function ChapterOne({ levelData, onLeave }) {
   const [screen, setScreen] = useState("story"); 
@@ -9,7 +10,8 @@ function ChapterOne({ levelData, onLeave }) {
   const [selectedChoiceIdx, setSelectedChoiceIdx] = useState(null);
 
   const currentQuestion = useMemo(() => {
-    return levelData.questions[currentIndex];
+    // Предотвращаем падение кода, если индекс вышел за пределы массива на экране победы
+    return levelData.questions[currentIndex] || null;
   }, [levelData, currentIndex]);
 
   function startQuiz() {
@@ -19,7 +21,6 @@ function ChapterOne({ levelData, onLeave }) {
     setSelectedChoiceIdx(null);
     setScreen("quiz");
   }
-
 
   function handleQuizAnswer(index) {
     if (answered) return; 
@@ -31,8 +32,17 @@ function ChapterOne({ levelData, onLeave }) {
     setAnswered(true); 
   }
 
-
+  /* 👑 ИСПРАВЛЕННАЯ ФУНКЦИЯ handleNext */
   function handleNext() {
+    // Проверяем: если текущий вопрос был самым последним в списке
+    if (currentIndex === levelData.questions.length - 1) {
+      
+      // Вызываем сохранение и разблокируем Главу 2 в Главном Меню!
+      progressStorage.unlockLevel(2);
+      
+    }
+
+    // Переключаемся дальше (на экран "Chapter Cleared!")
     setCurrentIndex((prev) => prev + 1); 
     setAnswered(false);
     setSelectedChoiceIdx(null); 
@@ -52,8 +62,6 @@ function ChapterOne({ levelData, onLeave }) {
         </div>
       )}
 
-
-
       {screen === "quiz" && (
         <div className="ch1-screen-wrapper">
           <button className="ch1-back-btn" onClick={onLeave}>🡨 Abandon Mission</button>
@@ -71,42 +79,43 @@ function ChapterOne({ levelData, onLeave }) {
                 <button className="ch1-action-btn" onClick={onLeave}>Continue Journey ➜</button>
               </>
             ) : (
-
-
-<>
+              <>
                 <div className="ch1-top-bar">
                   <span>Question {currentIndex + 1} / {levelData.questions.length}</span>
                 </div>
-                <h2 className="ch1-question-text">{currentQuestion.text}</h2>
-                <div className="ch1-answers-grid">
-                  {currentQuestion.options.map((option, idx) => {
-                    const isCorrect = idx === currentQuestion.correct; 
-                    const isSelected = selectedChoiceIdx === idx;
-                    
-                    return (
-                      <button 
-                        key={idx} 
-                        className={`ch1-answer-btn ${answered && isCorrect ? "correct" : ""} ${isSelected && !isCorrect ? "wrong" : ""}`} 
-                        disabled={answered} // Выключаем кнопки после первого ответа
-                        onClick={() => handleQuizAnswer(idx)}
-                      >
-                        {option}
-                      </button>
-                    );
-                  })}
-                </div>
+                {currentQuestion && (
+                  <>
+                    <h2 className="ch1-question-text">{currentQuestion.text}</h2>
+                    <div className="ch1-answers-grid">
+                      {currentQuestion.options.map((option, idx) => {
+                        const isCorrect = idx === currentQuestion.correct; 
+                        const isSelected = selectedChoiceIdx === idx;
+                        
+                        return (
+                          <button 
+                            key={idx} 
+                            className={`ch1-answer-btn ${answered && isCorrect ? "correct" : ""} ${isSelected && !isCorrect ? "wrong" : ""}`} 
+                            disabled={answered} 
+                            onClick={() => handleQuizAnswer(idx)}
+                          >
+                            {option}
+                          </button>
+                        );
+                      })}
+                    </div>
 
-                {/* БЛОК С ОБРАТНОЙ СВЯЗЬЮ: Появляется только после совершения ответа */}
-                {answered && (
-                  <div className="ch1-duck-feedback">
-                    <img src="/feedbackduck.gif" className="ch1-duck-gif" alt="Feedback" />
-                    <span className={selectedChoiceIdx === currentQuestion.correct ? "ch1-correct-txt" : "ch1-wrong-txt"}>
-                      {selectedChoiceIdx === currentQuestion.correct ? "Quack! Perfect Blueprint!" : "Oh no! Incorrect specification!"}
-                    </span>
-                  </div>
-                )}
-                {answered && (
-                  <button className="ch1-action-btn" onClick={handleNext}>Next ➜</button>
+                    {answered && (
+                      <div className="ch1-duck-feedback">
+                        <img src="/feedbackduck.gif" className="ch1-duck-gif" alt="Feedback" />
+                        <span className={selectedChoiceIdx === currentQuestion.correct ? "ch1-correct-txt" : "ch1-wrong-txt"}>
+                          {selectedChoiceIdx === currentQuestion.correct ? "Quack! Perfect Blueprint!" : "Oh no! Incorrect specification!"}
+                        </span>
+                      </div>
+                    )}
+                    {answered && (
+                      <button className="ch1-action-btn" onClick={handleNext}>Next ➜</button>
+                    )}
+                  </>
                 )}
               </>
             )}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./chapterThree.css";
+import { progressStorage } from "../../progressStorage";
 
 function ChapterThree({ levelData, onLeave }) {
   const [isStarted, setIsStarted] = useState(false); 
@@ -33,6 +34,7 @@ function ChapterThree({ levelData, onLeave }) {
         setMercyStyle("ruthless");
       }
     }
+    progressStorage.unlockLevel(4);
   }
 
   function handleTextSubmit(e) {

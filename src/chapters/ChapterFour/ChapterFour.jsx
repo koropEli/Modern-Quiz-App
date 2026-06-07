@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 // Подключаем наш обновленный светлый файл стилей для этой главы
 import "./chapterFour.css";
+import { progressStorage } from "../../progressStorage";
 
 // Объявляем основной компонент четвертой главы, принимающий данные уровня и функцию выхода в меню
 function ChapterFour({ levelData, onLeave }) {
@@ -130,7 +131,7 @@ function ChapterFour({ levelData, onLeave }) {
               {/* Верхняя навигационная панель карточки итогов */}
               <div className="ch4-summary-top-bar">
                 <button className="ch4-summary-menu-btn" onClick={onLeave}>
-                  👑 Main Menu
+                  Main Menu
                 </button>
               </div>
 
@@ -157,13 +158,13 @@ function ChapterFour({ levelData, onLeave }) {
                   {/* Если reignStyle равен "benevolent", показываем утку с Сердцем */}
                   {reignStyle === "benevolent" ? (
                     <div className="ch4-card-preview-box ch4-animation-fade-in">
-                      <img src="/cardHeart.png" alt="Card Heart" className="ch4-result-duck-card" />
+                      <img src="/cardHeart.jpg" alt="Card Heart" className="ch4-result-duck-card" />
                       <span className="ch4-card-caption">Path of Benevolence</span>
                     </div>
                   ) : (
                     /* Во всех остальных случаях (путь силы) — выводим утку с Трефами */
                     <div className="ch4-card-preview-box ch4-animation-fade-in">
-                      <img src="/cardAceofClubs.png" alt="Card Ace of Clubs" className="ch4-result-duck-card" />
+                      <img src="/cardAceofClubs.jpg" alt="Card Ace of Clubs" className="ch4-result-duck-card" />
                       <span className="ch4-card-caption">Path of Absolute Power</span>
                     </div>
                   )}
