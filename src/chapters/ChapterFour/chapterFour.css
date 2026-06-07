@@ -1,57 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
+
+/* ГЛАВНЫЙ КОНТЕЙНЕР ЭКРАНА */
 .chapter-four-layout {
-  position: absolute;
+  position: fixed; /* Изменили на fixed, чтобы фон не дублировался и занимал весь экран */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  background-color: #050402;
+  display: flex; /* Центрируем содержимое по вертикали и горизонтали */
+  justify-content: center;
+  align-items: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  box-sizing: border-box;
+  z-index: 10;
+  padding: 20px;
+}
+
+/* Обертка для позиционирования (чтобы ничего не расползалось) */
+.ch4-quiz-box-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Inter', sans-serif;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 }
 
-/* Кнопка "Назад" в левом верхнем углу */
+/* НАМЕРТВО ФИКСИРОВАННАЯ КНОПКА МЕНЮ В УГЛУ */
 .ch4-back-btn {
-  position: absolute;
+  position: fixed;
   top: 30px;
   left: 30px;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(217, 119, 6, 0.3);
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(217, 119, 6, 0.5);
   color: #fbbf24;
-  padding: 10px 16px;
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   transition: all 0.3s ease;
+  z-index: 999;
 }
 
 .ch4-back-btn:hover {
   background: #d97706;
   color: #000;
-  box-shadow: 0 0 15px rgba(217, 119, 6, 0.5);
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.6);
+  transform: translateY(-2px);
 }
 
-/* Карточка Пролога */
+/* ======================================================== */
+/* 🏰 КАРТОЧКА ПРОЛОГА (ИСПРАВЛЕНО: ЖЕСТКИЕ РАЗМЕРЫ ПК)   */
+/* ======================================================== */
 .ch4-prologue-card {
-  background: rgba(12, 10, 8, 0.9);
+  background: rgba(12, 10, 8, 0.93);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(251, 191, 36, 0.25);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
   padding: 50px 40px;
   border-radius: 16px;
+  
+  /* Жестко задаем размеры для десктопа, чтобы не сжималось в полоску */
+  width: 550px; 
   max-width: 550px;
-  width: 90%;
+  box-sizing: border-box;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .ch4-prologue-header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
+  width: 100%;
 }
 
 .ch4-tag-gold {
@@ -66,15 +94,13 @@
 .ch4-tag-status {
   color: #a1a1aa;
   font-size: 11px;
-  letter-spacing: 1px;
 }
 
 .ch4-prologue-title {
-  font-family: 'Cinzel', serif;
   font-size: 32px;
   color: #fef08a;
   margin: 0 0 20px 0;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  font-weight: 800;
 }
 
 .ch4-prologue-description {
@@ -95,7 +121,6 @@
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  letter-spacing: 1px;
 }
 
 .ch4-begin-btn:hover {
@@ -103,16 +128,23 @@
   box-shadow: 0 0 25px rgba(217, 119, 6, 0.6);
 }
 
-/* Игровое окно Квиза */
+/* ======================================================== */
+/* 🧱 КАРТОЧКА КВИЗА (ИСПРАВЛЕНО: ЖЕСТКИЕ РАЗМЕРЫ ПК)     */
+/* ======================================================== */
 .ch4-quiz-box {
-  background: rgba(15, 12, 10, 0.88);
+  background: rgba(15, 12, 10, 0.93);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(251, 191, 36, 0.15);
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.85);
-  padding: 40px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 600px;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  padding: 45px;
+  border-radius: 16px;
+  
+  /* Жестко фиксируем ширину */
+  width: 620px; 
+  max-width: 620px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .ch4-quiz-progress {
@@ -125,13 +157,12 @@
 
 .ch4-question-text {
   color: #fff;
-  font-size: 22px;
+  font-size: 24px;
   margin: 0 0 30px 0;
   font-weight: 600;
   line-height: 1.4;
 }
 
-/* Форма для текстового ответа */
 .ch4-text-form {
   display: flex;
   flex-direction: column;
@@ -139,18 +170,19 @@
 }
 
 .ch4-text-input {
-  background: rgba(30, 25, 20, 0.6);
+  background: rgba(30, 25, 20, 0.7);
   border: 1px solid rgba(251, 191, 36, 0.3);
   color: #fff;
-  padding: 15px;
-  font-size: 16px;
-  border-radius: 6px;
+  padding: 16px;
+  font-size: 18px;
+  border-radius: 8px;
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ch4-text-input:focus {
   border-color: #fbbf24;
-  box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
 }
 
 .ch4-submit-input-btn {
@@ -162,14 +194,8 @@
   font-weight: 700;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.ch4-submit-input-btn:hover:not(:disabled) {
-  background: #fef08a;
-}
-
-/* Списки кнопок выбора */
 .ch4-answers-list {
   display: flex;
   flex-direction: column;
@@ -192,11 +218,9 @@
 .ch4-answer-btn:hover:not(:disabled) {
   background: rgba(217, 119, 6, 0.15);
   border-color: #d97706;
-  color: #fff;
   transform: translateX(4px);
 }
 
-/* Стили состояний кнопок после принятия указа */
 .imperial-active {
   background: linear-gradient(90deg, rgba(217, 119, 6, 0.3) 0%, rgba(0, 0, 0, 0) 100%) !important;
   border-color: #fbbf24 !important;
@@ -208,65 +232,202 @@
   opacity: 0.3;
 }
 
-/* Кнопка "Следующий указ" */
 .ch4-next-btn {
-  background: #fff;
-  color: #000;
+  background: #ffffff;
+  color: #000000;
   border: none;
-  padding: 14px 24px;
+  padding: 14px 28px;
   font-size: 14px;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   margin-top: 25px;
-  float: right;
-  transition: background 0.2s;
+  align-self: flex-end;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
 }
 
 .ch4-next-btn:hover {
-  background: #e4e4e7;
+  background: #fbbf24;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 20px rgba(251, 191, 36, 0.4);
 }
 
-/* Экран Финала */
-.ch4-result-screen {
-  text-align: center;
-  padding: 20px 0;
+/* ======================================================== */
+/* 👑 ФИНАЛЬНАЯ ИМПЕРСКАЯ КАРТОЧКА ИТОГОВ                   */
+/* ======================================================== */
+.ch4-custom-summary-card {
+  background: linear-gradient(145deg, #0d0a05 0%, #17120a 100%);
+  border: 2px solid #fbbf24; 
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 
+              0 0 35px rgba(251, 191, 36, 0.25),
+              inset 0 0 20px rgba(251, 191, 36, 0.08);
+  border-radius: 24px;
+  width: 850px; 
+  max-width: 850px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  backdrop-filter: blur(20px);
+  animation: imperialGlowPulse 4s infinite alternate;
 }
 
-.ch4-victory-title {
+@keyframes imperialGlowPulse {
+  0% { border-color: rgba(251, 191, 36, 0.7); box-shadow: 0 0 40px rgba(251, 191, 36, 0.15); }
+  100% { border-color: rgba(251, 191, 36, 1); box-shadow: 0 0 60px rgba(251, 191, 36, 0.35); }
+}
+
+.ch4-summary-top-bar {
+  background: rgba(15, 12, 7, 0.85);
+  padding: 20px 35px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.ch4-summary-menu-btn {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(251, 191, 36, 0.2);
   color: #fbbf24;
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 15px 0;
-  font-family: 'Cinzel', serif;
-}
-
-.ch4-score-text {
-  font-size: 18px;
-  color: #fff;
-  margin-bottom: 10px;
-}
-
-.ch4-status-text {
-  color: #a1a1aa;
+  padding: 10px 24px;
   font-size: 14px;
-  line-height: 1.5;
-  margin-bottom: 30px;
-}
-
-.ch4-finish-btn {
-  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-  color: #000;
-  border: none;
-  padding: 16px 32px;
-  font-size: 15px;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
-  transition: transform 0.2s;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
 }
 
-.ch4-finish-btn:hover {
-  transform: scale(1.03);
+.ch4-summary-menu-btn:hover {
+  background: #fbbf24;
+  color: #000000;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+  transform: translateY(-1px);
+}
+
+.ch4-summary-content {
+  display: flex;
+  padding: 45px 50px;
+  gap: 50px;
+  align-items: center;
+}
+
+.ch4-summary-text-side {
+  flex: 1.2;
+}
+
+.ch4-summary-text-side h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 38px;
+  font-weight: 900;
+  color: #fbbf24;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+}
+
+.ch4-summary-status-desc {
+  font-size: 22px;
+  font-weight: 500;
+  color: #fef08a;
+  margin: 0 0 16px 0;
+  letter-spacing: 0.5px;
+}
+
+.ch4-highlight-kingdom {
+  color: #ffffff;
+  font-weight: 700;
+  border-bottom: 1px dashed #fbbf24;
+}
+
+.ch4-summary-style-desc {
+  font-size: 16px;
+  color: #d4d4d8;
+  line-height: 1.6;
+  margin: 0 0 35px 0;
+}
+
+.ch4-style-badge {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+}
+
+.ch4-style-kind {
+  background: rgba(244, 63, 94, 0.15);
+  color: #fb7185;
+  border: 1px solid #f43f5e;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+}
+
+.ch4-style-hard {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+  border: 1px solid #fbbf24;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+}
+
+.ch4-summary-score {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: #71717a;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.ch4-summary-card-side {
+  flex: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ch4-card-preview-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.ch4-result-duck-card {
+  width: 210px;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85),
+              0 0 25px rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ch4-card-preview-box:hover .ch4-result-duck-card {
+  transform: scale(1.06) rotate(-3deg);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9),
+              0 0 35px rgba(251, 191, 36, 0.3);
+  border-color: rgba(251, 191, 36, 0.5);
+}
+
+.ch4-card-caption {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: #71717a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.ch4-card-preview-box:hover .ch4-card-caption {
+  color: #fbbf24;
+}
+
+.ch4-animation-fade-in {
+  animation: ch4FadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ch4FadeIn {
+  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }

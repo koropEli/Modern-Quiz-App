@@ -7,30 +7,40 @@ function ChapterFour({ levelData, onLeave }) {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [typedAnswer, setTypedAnswer] = useState(""); 
+  
+  // Хранилища для имперского финала
+  const [typedAnswer, setTypedAnswer] = useState(""); // Вводимый текст
+  const [kingdomName, setKingdomName] = useState("Your Kingdom"); // Имя королевства
+  const [reignStyle, setReignStyle] = useState(""); // "benevolent" (милосердный/сердце) или "absolute" (тоталитарный/трефы)
 
   const questions = levelData?.questions || [];
   const currentQuestion = questions[currentIndex];
   const introText = levelData?.story || levelData?.prologue;
 
-  // Проверяем, текстовый ли это вопрос (например, имя Королевства)
   const isTextInputQuestion = currentQuestion?.type === "text" || !currentQuestion?.options || currentQuestion?.options.length === 0;
 
-  // Выбор имперского решения
   function handleAnswerClick(answerIndex) {
     if (isAnswered) return;
     setSelectedAnswer(answerIndex);
     setIsAnswered(true);
-
-    // Любое государственное решение продвигает нас по сюжету
     setScore((prev) => prev + 1);
+
+    // ПРОВЕРКА: Если это финальный вопрос про форму правления (например, указ о власти)
+    // В зависимости от того, какой по счету это вопрос или какой у него ID (обычно финальный вопрос про тип режима)
+    if (currentQuestion?.id === "regime" || currentIndex === questions.length - 1) {
+      if (answerIndex === 0) {
+        setReignStyle("benevolent"); // Путь Сердца (Доброжелательный)
+      } else {
+        setReignStyle("absolute"); // Путь Треф (Абсолютный/Жесткий)
+      }
+    }
   }
 
-  // Утверждение названия государства
   function handleTextSubmit(e) {
     e.preventDefault();
     if (!typedAnswer.trim()) return;
     
+    setKingdomName(typedAnswer.trim()); // Сохраняем имя королевства
     setIsAnswered(true);
     setScore((prev) => prev + 1); 
   }
@@ -47,12 +57,14 @@ function ChapterFour({ levelData, onLeave }) {
       className="chapter-four-layout"
       style={{ backgroundImage: "url('/backgroundChapter4.jpg')" }}
     >
-      {/* Кнопка отступить */}
-      <button className="ch4-back-btn" onClick={onLeave}>
-        ← Abandon Crown
-      </button>
+      {/* Скрываем кнопку дезертирства на финальном экране */}
+      {currentIndex < questions.length && (
+        <button className="ch4-back-btn" onClick={onLeave}>
+          ← Abandon Crown
+        </button>
+      )}
 
-      {/* ЭКРАН 1: ПРОЛОГ (КОРОНАЦИЯ) */}
+      {/* ЭКРАН 1: ПРОЛОГ */}
       {!isStarted ? (
         <div className="ch4-prologue-card">
           <div className="ch4-prologue-header">
@@ -73,25 +85,49 @@ function ChapterFour({ levelData, onLeave }) {
           </button>
         </div>
       ) : (
-        /* ЭКРАН 2: ИМПЕРСКИЕ РЕШЕНИЯ */
-        <div className="ch4-quiz-box">
+        /* ЭКРАН 2: ИГРА ИЛИ ПРЕМИАЛЬНЫЙ ФИНАЛ */
+        <div className="ch4-quiz-box-wrapper">
           {currentIndex >= questions.length ? (
-            <div className="ch4-result-screen">
-              <h3 className="ch4-victory-title">
-                Empire Established
-              </h3>
-              <p className="ch4-score-text">
-                Decrees Signed: {score} / {questions.length}
-              </p>
-              <p className="ch4-status-text">
-                Status: Sovereign. Your empire stands unbreakable. The Chronicles of Ascension are complete!
-              </p>
-              <button className="ch4-finish-btn" onClick={onLeave}>
-                Complete Chronicle 👑
-              </button>
+            /* ================= ЗОЛОТАЯ ИМПЕРСКАЯ ВКЛАДКА ИТОГОВ ================= */
+            <div className="ch4-custom-summary-card">
+              <div className="ch4-summary-top-bar">
+                <button className="ch4-summary-menu-btn" onClick={onLeave}>
+                  Main Menu
+                </button>
+              </div>
+
+              <div className="ch4-summary-content">
+                <div className="ch4-summary-text-side">
+                  <h2>Empire Established!</h2>
+                  <p className="ch4-summary-status-desc">
+                    The Kingdom of <span className="ch4-highlight-kingdom">"{kingdomName}"</span> stands eternal!
+                  </p>
+                  <p className="ch4-summary-style-desc">
+                    By your imperial decree, you have chosen to build a <span className={`ch4-style-badge ${reignStyle === "benevolent" ? "ch4-style-kind" : "ch4-style-hard"}`}>{reignStyle || "sovereign"}</span> state. 
+                    May your crown shine brightly, and we wish you absolute good luck in your future trials!
+                  </p>
+                  <p className="ch4-summary-score">Imperial Decrees Issued: {score} / {questions.length}</p>
+                </div>
+
+                <div className="ch4-summary-card-side">
+                  {/* Вывод оставшихся карт из файла image_5a1883.png */}
+                  {reignStyle === "benevolent" ? (
+                    <div className="ch4-card-preview-box ch4-animation-fade-in">
+                      <img src="/cardHeart.jpg" alt="Card Heart" className="ch4-result-duck-card" />
+                      <span className="ch4-card-caption">Path of Benevolence</span>
+                    </div>
+                  ) : (
+                    <div className="ch4-card-preview-box ch4-animation-fade-in">
+                      <img src="/cardAceofClubs.jpg" alt="Card Ace of Clubs" className="ch4-result-duck-card" />
+                      <span className="ch4-card-caption">Path of Absolute Power</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           ) : (
-            <>
+            /* ОБЫЧНЫЙ ИМПЕРСКИЙ КВИЗ */
+            <div className="ch4-quiz-box">
               <div className="ch4-quiz-progress">
                 Imperial Decree {currentIndex + 1} / {questions.length}
               </div>
@@ -100,7 +136,6 @@ function ChapterFour({ levelData, onLeave }) {
                 {currentQuestion?.text}
               </h2>
 
-              {/* Вариант А: Текстовый ввод (Имя Королевства) */}
               {isTextInputQuestion ? (
                 <form onSubmit={handleTextSubmit} className="ch4-text-form">
                   <input
@@ -119,13 +154,12 @@ function ChapterFour({ levelData, onLeave }) {
                   )}
                 </form>
               ) : (
-                /* Вариант Б: Выбор из указов */
                 <div className="ch4-answers-list">
                   {currentQuestion?.options?.map((option, idx) => {
                     let btnClass = "ch4-answer-btn";
                     if (isAnswered) {
                       if (idx === selectedAnswer) {
-                        btnClass += " imperial-active"; // Подсвечиваем золотом выбранный указ
+                        btnClass += " imperial-active";
                       } else {
                         btnClass += " imperial-disabled";
                       }
@@ -150,7 +184,7 @@ function ChapterFour({ levelData, onLeave }) {
                   Issue Next Decree ➜
                 </button>
               )}
-            </>
+            </div>
           )}
         </div>
       )}
