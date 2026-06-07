@@ -9,29 +9,25 @@ function ChapterTwo({ levelData, onLeave }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
 
-  // Безопасное извлечение вопросов через оператор опциональной цепочки
+  // Достаём вопросы из данных главы. Если данных нет, используем пустой массив
   const questions = levelData?.questions || [];
   const currentQuestion = questions[currentIndex];
-  // Поддержка полей названия пролога из разных версий бэкенда данных
   const introText = levelData?.story || levelData?.prologue;
 
-  // Клик по карте/ответу в казино
   function handleAnswerClick(answerIndex) {
     if (isAnswered) return;
     setSelectedAnswer(answerIndex);
-    setIsAnswered(true);
+    setIsAnswered(true);// зеелный для правильного ответа, красный для неправильного, остальные приглушаются
 
-    // Если индекс совпал с правильным — увеличиваем счет побед над дилером
     if (answerIndex === currentQuestion.correct) {
       setScore((prev) => prev + 1);
     }
   }
 
-  // Сброс стейтов выбора для перехода на следующую раздачу карт
   function handleNext() {
-    setSelectedAnswer(null);
-    setIsAnswered(false);
-    setCurrentIndex((prev) => prev + 1);
+  setSelectedAnswer(null); // Забываем прошлый выбор (убираем подсветку кнопок)
+  setIsAnswered(false); // Снимаем заморозку экрана (кнопки снова можно нажимать)
+  setCurrentIndex((prev) => prev + 1); // Переключаем номер вопроса на следующий (+1)
   }
 
   return (
@@ -59,6 +55,8 @@ function ChapterTwo({ levelData, onLeave }) {
           </button>
         </div>
       ) : (
+
+
         /* ЭКРАН 2: САМ КВИЗ С ВОПРОСАМИ (Показывается ПОСЛЕ нажатия кнопки) */
         <div className="casino-quiz-box">
           {/* ФИНАЛЬНЫЙ ЭКРАН ПОДВЕДЕНИЯ ИТОГОВ РАУНДА В КАЗИНО */}
@@ -80,6 +78,9 @@ function ChapterTwo({ levelData, onLeave }) {
               </button>
             </div>
           ) : (
+
+
+
             /* ЭКРАН ОТОБРАЖЕНИЯ АКТИВНОГО КАРТОЧНОГО ВОПРОСА */
             <>
               <div className="quiz-progress">
@@ -90,12 +91,11 @@ function ChapterTwo({ levelData, onLeave }) {
               <div className="casino-answers-list">
                 {currentQuestion?.options.map((option, idx) => {
                   let btnClass = "casino-answer-btn";
-                  // Стилизация кнопок ответов в зависимости от статуса проверки
                   if (isAnswered) {
                     if (idx === currentQuestion.correct) {
-                      btnClass += " correct"; // Подсвечиваем зелёным верную карту
+                      btnClass += " correct"; 
                     } else if (idx === selectedAnswer) {
-                      btnClass += " wrong";   // Подсвечиваем красным ошибку игрока
+                      btnClass += " wrong"; 
                     } else {
                       btnClass += " disabled"; // Приглушаем прозрачность остальных кнопок
                     }

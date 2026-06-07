@@ -2,49 +2,45 @@ import { useState, useMemo } from "react";
 import { levelsData } from "./levelsData";
 import ChapterVideo from "./ChapterVideo";
 
-// Импортируем компоненты игровых глав
 import ChapterOne from "./chapters/ChapterOne/ChapterOne";
 import ChapterTwo from "./chapters/ChapterTwo/ChapterTwo";
-// import ChapterThree from "./chapters/ChapterThree/ChapterThree";
-// import ChapterFour from "./chapters/ChapterFour/ChapterFour";
+import ChapterThree from "./chapters/ChapterThree/ChapterThree";
+import ChapterFour from "./chapters/ChapterFour/ChapterFour";
 
 import "./index.css";
 import "./App.css";
 import "./MainMenu.css";
 
 function App() {
-  // Переключатель экранов. Может принимать значения: "menu", "video", "story"
   const [screen, setScreen] = useState("menu"); 
-  // Массив ID уровней, которые открыты для нажатия. Пока открыты 1 и 2 главы
-  const [unlockedLevels] = useState([1, 2]);
+  const [unlockedLevels] = useState([1, 2, 3, 4]); // Для тестирования все уровни открыты
+  // const [unlockedLevels, setUnlockedLevels] = useState([1]);
   // Хранит объект текущей выбранной главы (напр. levelsData[0])
   const [currentLevel, setCurrentLevel] = useState(null);
 
-  // Функция срабатывает при выборе главы в меню
   function handleSelectLevel(level) {
-    setCurrentLevel(level); // Запоминаем выбранную главу
+    setCurrentLevel(level);
     if (level.video) {
-      setScreen("video"); // Если у уровня прописано видео — включаем плеер
+      setScreen("video");
     } else {
-      setScreen("story"); // Иначе сразу переходим к карточке пролога
+      setScreen("story"); 
     }
   }
 
-  // Функция вызывается, когда видеоролик просмотрен или пропущен
   function handleVideoFinished() {
-    setScreen("story"); // Переключаем игрока на экран текстового пролога главы
+    setScreen("story");
   }
 
-  // Специфический хук useMemo оптимизирует смену фоновой картинки всего приложения
+
   const currentBackground = useMemo(() => {
-    if (screen === "menu") return "/mainMenuBackground.jpg"; // Обои для главного меню
+    if (screen === "menu") return "/mainMenuBackground.jpg";
     if (currentLevel) {
-      return currentLevel.quizBg || "/mainMenuBackground.jpg"; // Обои выбранной главы
+      return currentLevel.quizBg || "/mainMenuBackground.jpg"; 
     }
     return "/mainMenuBackground.jpg";
-  }, [screen, currentLevel]); // Пересчитывать картинку только при изменении экрана или уровня
+  }, [screen, currentLevel]); 
 
-  // УСЛОВИЕ 1: Если включен режим видео и уровень выбран — рендерим только видеоплеер
+
   if (screen === "video" && currentLevel) {
     return (
       <ChapterVideo 
@@ -54,14 +50,13 @@ function App() {
     );
   }
 
-  // ОСНОВНОЙ РЕНДЕР ПРИЛОЖЕНИЯ
+
   return (
     <div 
       className="game-app-container" 
       style={{ backgroundImage: `url(${currentBackground})` }} // Привязываем динамический фон
     >
       
-      {/* ЭКРАН: ГЛАВНОЕ МЕНЮ (показывается только если screen === "menu") */}
       {screen === "menu" && (
         <div className="main-menu-layout"> 
           <div className="menu-box">
@@ -88,29 +83,25 @@ function App() {
         </div>
       )}
 
-      {/* ЭКРАН: ИГРОВЫЕ ГЛУБИНЫ КВИЗА (Показывается, если мы вышли из главного меню) */}
       {screen !== "menu" && currentLevel && (
         <>
-          {/* Если ID уровня равен 1 — рендерим первую главу */}
           {currentLevel.id === 1 && (
             <ChapterOne levelData={currentLevel} onLeave={() => setScreen("menu")} />
           )}
           
-          {/* Если ID уровня равен 2 — рендерим вторую главу */}
           {currentLevel.id === 2 && (
             <ChapterTwo levelData={currentLevel} onLeave={() => setScreen("menu")} />
           )}
 
           {/* Комментарии к 3 и 4 главе не удалены, они скрыты внутри условий */}
-          {/*
+           
           {currentLevel.id === 3 && (
             <ChapterThree levelData={currentLevel} onLeave={() => setScreen("menu")} />
           )}
-
+          
           {currentLevel.id === 4 && (
             <ChapterFour levelData={currentLevel} onLeave={() => setScreen("menu")} />
           )}
-          */}
         </>
       )}
     </div>

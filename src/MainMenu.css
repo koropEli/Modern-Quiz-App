@@ -5,17 +5,17 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: flex-start; /* Сдвигает меню на левую сторону */
+  justify-content: flex-start; 
   align-items: center;
   box-sizing: border-box;
   padding-left: 6%; /* Идеальный отступ, чтобы не перекрывать утку на троне */
 }
 
 .menu-box {
-  background: rgba(10, 10, 12, 0.85); /* Глубокий, зловещий угольно-черный цвет */
+  background: rgba(10, 10, 12, 0.85);
   backdrop-filter: blur(12px);
   padding: 45px 40px;
-  border-radius: 12px; /* Более острые, строгие углы в готическом стиле */
+  border-radius: 12px;
   border: 1px solid rgba(251, 191, 36, 0.15); /* Едва заметная золотая рамка */
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.6);
   width: 100%;
@@ -25,7 +25,7 @@
 .game-title {
   font-family: 'Cinzel', serif;
   font-size: 34px;
-  color: #d97706; /* Более темное, состаренное золото */
+  color: #d97706; 
   margin: 0 0 6px 0;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -34,7 +34,7 @@
 
 .game-subtitle {
   font-size: 11px;
-  color: #64748b; /* Мрачный серый цвет подзаголовка */
+  color: #64748b; 
   margin: 0 0 35px 0;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -65,7 +65,7 @@
 
 /* ЭФФЕКТ ПРИ НАВЕДЕНИИ: Мрачно-багровое свечение */
 .menu-btn:hover:not(:disabled) {
-  background: #7f1d1d; /* Зловещий кроваво-красный цвет */
+  background: #7f1d1d;
   color: #fff;
   border-color: #b91c1c;
   transform: translateX(6px); /* Медленное зловещее выдвижение вправо */
@@ -80,7 +80,7 @@
 }
 
 .marker {
-  color: #d97706; /* Золотой маркер */
+  color: #d97706; 
   margin-right: 10px;
   transition: color 0.3s;
 }

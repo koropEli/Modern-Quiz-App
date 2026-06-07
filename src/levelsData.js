@@ -1,4 +1,3 @@
-// Экспортируем массив данных, чтобы его можно было импортировать в App.jsx
 export const levelsData = [
   {
     id: 1,
@@ -37,10 +36,7 @@ export const levelsData = [
       { text: "Absolute best poker hand?", options: ["Four of a Kind", "Straight Flush", "Royal Flush", "Full House"], correct: 2 }
     ]
   }
-
-  
-  /* Код 3 и 4 главы закомментирован, чтобы сейчас работали только 1 и 2 главы
-  ,
+,
   {
     id: 3,
     title: "Chapter III: The Shadow Don",
@@ -74,5 +70,4 @@ export const levelsData = [
       { id: "grandStrategy", type: "choice", text: "Ultimate imperial focus:", options: ["Total Industry", "Cosmic Ascension"] }
     ]
   }
-  */
 ];

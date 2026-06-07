@@ -53,14 +53,13 @@
 }
 
 .skip-video-btn:hover {
-  background: #7f1d1d; /* Мрачно-багровый цвет при наведении */
+  background: #7f1d1d; 
   border-color: #b91c1c;
   color: #ffffff;
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(185, 28, 28, 0.5);
 }
 
-/* Вспомогательные базовые стили */
 img {
   max-width: 100%;
   height: auto;
