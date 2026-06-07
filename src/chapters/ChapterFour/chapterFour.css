@@ -1,37 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
-/* ГЛАВНЫЙ КОНТЕЙНЕР ЭКРАНА */
+/* ======================================================== */
+/* 🌍 ГЛАВНЫЙ ИМПЕРСКИЙ КОНТЕЙНЕР (ФИКСАЦИЯ И ЦЕНТРИРОВАНИЕ) */
+/* ======================================================== */
 .chapter-four-layout {
-  position: fixed; /* Изменили на fixed, чтобы фон не дублировался и занимал весь экран */
+  position: fixed; /* Намертво фиксируем на весь экран */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  
+  /* Идеальное отображение фонового арта без швов и дубликатов */
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-color: #050402;
-  display: flex; /* Центрируем содержимое по вертикали и горизонтали */
-  justify-content: center;
-  align-items: center;
+  
+  /* Жесткое центрирование абсолютно любого дочернего элемента на ПК */
+  display: flex !important; 
+  justify-content: center !important;
+  align-items: center !important;
+  
   font-family: 'Plus Jakarta Sans', sans-serif;
   box-sizing: border-box;
   z-index: 10;
-  padding: 20px;
+  padding: 40px;
 }
 
-/* Обертка для позиционирования (чтобы ничего не расползалось) */
+/* Обёртка игрового процесса */
 .ch4-quiz-box-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
   width: 100%;
   height: 100%;
 }
 
-/* НАМЕРТВО ФИКСИРОВАННАЯ КНОПКА МЕНЮ В УГЛУ */
+/* ======================================================== */
+/* 👑 ФИКСИРОВАННАЯ КНОПКА МЕНЮ В УГЛУ ЭКРАНА                */
+/* ======================================================== */
 .ch4-back-btn {
-  position: fixed;
+  position: fixed !important;
   top: 30px;
   left: 30px;
   background: rgba(0, 0, 0, 0.85);
@@ -56,23 +66,26 @@
 }
 
 /* ======================================================== */
-/* 🏰 КАРТОЧКА ПРОЛОГА (ИСПРАВЛЕНО: ЖЕСТКИЕ РАЗМЕРЫ ПК)   */
+/* 🏰 СВЕТЛАЯ КАРТОЧКА ПРОЛОГА (ФИКСИРОВАННЫЙ РАЗМЕР ПК)   */
 /* ======================================================== */
 .ch4-prologue-card {
-  background: rgba(12, 10, 8, 0.93);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(251, 191, 36, 0.25);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+  background: rgba(255, 255, 255, 0.92); 
+  backdrop-filter: blur(20px);
+  border: 2px solid #fbbf24;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
   padding: 50px 40px;
   border-radius: 16px;
   
-  /* Жестко задаем размеры для десктопа, чтобы не сжималось в полоску */
-  width: 550px; 
-  max-width: 550px;
+  /* Жесткие размеры под монитор, исключающие растягивание */
+  width: 580px !important; 
+  max-width: 580px !important;
+  min-width: 580px !important;
   box-sizing: border-box;
   text-align: center;
+  
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .ch4-prologue-header {
@@ -83,7 +96,7 @@
 }
 
 .ch4-tag-gold {
-  color: #fbbf24;
+  color: #b45309;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -92,22 +105,24 @@
 }
 
 .ch4-tag-status {
-  color: #a1a1aa;
+  color: #71717a;
   font-size: 11px;
+  font-weight: 600;
 }
 
 .ch4-prologue-title {
   font-size: 32px;
-  color: #fef08a;
-  margin: 0 0 20px 0;
+  color: #1c1917;
+  margin: 0 0 25px 0;
   font-weight: 800;
+  line-height: 1.2;
 }
 
 .ch4-prologue-description {
-  color: #d4d4d8;
-  font-size: 15px;
+  color: #44403c;
+  font-size: 16px;
   line-height: 1.6;
-  margin-bottom: 35px;
+  margin-bottom: 40px;
 }
 
 .ch4-begin-btn {
@@ -121,45 +136,47 @@
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
+  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
 }
 
 .ch4-begin-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 25px rgba(217, 119, 6, 0.6);
+  box-shadow: 0 6px 25px rgba(217, 119, 6, 0.5);
 }
 
 /* ======================================================== */
-/* 🧱 КАРТОЧКА КВИЗА (ИСПРАВЛЕНО: ЖЕСТКИЕ РАЗМЕРЫ ПК)     */
+/* 🧱 СВЕТЛАЯ КАРТОЧКА КВИЗА (ФИКСИРОВАННЫЙ РАЗМЕР ПК)      */
 /* ======================================================== */
 .ch4-quiz-box {
-  background: rgba(15, 12, 10, 0.93);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(251, 191, 36, 0.2);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border: 2px solid #fbbf24;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
   padding: 45px;
   border-radius: 16px;
   
-  /* Жестко фиксируем ширину */
-  width: 620px; 
-  max-width: 620px;
+  /* Строгие размеры квиза */
+  width: 620px !important; 
+  max-width: 620px !important;
+  min-width: 620px !important;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
 .ch4-quiz-progress {
-  color: #fbbf24;
-  font-size: 12px;
-  font-weight: 600;
+  color: #b45309;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 1px;
   margin-bottom: 15px;
 }
 
 .ch4-question-text {
-  color: #fff;
+  color: #1c1917;
   font-size: 24px;
   margin: 0 0 30px 0;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.4;
 }
 
@@ -170,15 +187,16 @@
 }
 
 .ch4-text-input {
-  background: rgba(30, 25, 20, 0.7);
-  border: 1px solid rgba(251, 191, 36, 0.3);
-  color: #fff;
+  background: #ffffff;
+  border: 2px solid rgba(217, 119, 6, 0.3);
+  color: #1c1917;
   padding: 16px;
   font-size: 18px;
   border-radius: 8px;
   outline: none;
   width: 100%;
   box-sizing: border-box;
+  transition: border-color 0.2s ease;
 }
 
 .ch4-text-input:focus {
@@ -186,14 +204,19 @@
 }
 
 .ch4-submit-input-btn {
-  background: #fbbf24;
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
   color: #000;
   border: none;
-  padding: 14px;
-  font-size: 14px;
+  padding: 16px;
+  font-size: 15px;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ch4-submit-input-btn:hover {
+  filter: brightness(1.05);
 }
 
 .ch4-answers-list {
@@ -203,38 +226,39 @@
 }
 
 .ch4-answer-btn {
-  background: rgba(24, 20, 15, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #e4e4e7;
+  background: rgba(244, 244, 245, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #27272a;
   padding: 16px 20px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   text-align: left;
-  font-weight: 500;
-  transition: all 0.25s ease;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
 .ch4-answer-btn:hover:not(:disabled) {
-  background: rgba(217, 119, 6, 0.15);
+  background: rgba(217, 119, 6, 0.1);
   border-color: #d97706;
+  color: #b45309;
   transform: translateX(4px);
 }
 
 .imperial-active {
-  background: linear-gradient(90deg, rgba(217, 119, 6, 0.3) 0%, rgba(0, 0, 0, 0) 100%) !important;
-  border-color: #fbbf24 !important;
-  color: #fbbf24 !important;
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.2) 0%, rgba(255, 255, 255, 0) 100%) !important;
+  border: 2px solid #d97706 !important;
+  color: #b45309 !important;
   font-weight: 700;
 }
 
 .imperial-disabled {
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .ch4-next-btn {
-  background: #ffffff;
-  color: #000000;
+  background: #1c1917;
+  color: #ffffff;
   border: none;
   padding: 14px 28px;
   font-size: 14px;
@@ -243,51 +267,45 @@
   cursor: pointer;
   margin-top: 25px;
   align-self: flex-end;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease;
 }
 
 .ch4-next-btn:hover {
   background: #fbbf24;
+  color: #000000;
   transform: translateY(-1px);
-  box-shadow: 0 5px 20px rgba(251, 191, 36, 0.4);
+  box-shadow: 0 6px 15px rgba(251, 191, 36, 0.4);
 }
 
 /* ======================================================== */
-/* 👑 ФИНАЛЬНАЯ ИМПЕРСКАЯ КАРТОЧКА ИТОГОВ                   */
+/* 👑 СВЕТЛАЯ ИМПЕРСКАЯ КАРТОЧКА ИТОГОВ                      */
 /* ======================================================== */
 .ch4-custom-summary-card {
-  background: linear-gradient(145deg, #0d0a05 0%, #17120a 100%);
+  background: linear-gradient(145deg, #ffffff 0%, #f4f4f5 100%);
   border: 2px solid #fbbf24; 
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 
-              0 0 35px rgba(251, 191, 36, 0.25),
-              inset 0 0 20px rgba(251, 191, 36, 0.08);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 
+              0 0 40px rgba(251, 191, 36, 0.15);
   border-radius: 24px;
-  width: 850px; 
-  max-width: 850px;
+  width: 850px !important; 
+  max-width: 850px !important;
+  min-width: 850px !important;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  backdrop-filter: blur(20px);
-  animation: imperialGlowPulse 4s infinite alternate;
-}
-
-@keyframes imperialGlowPulse {
-  0% { border-color: rgba(251, 191, 36, 0.7); box-shadow: 0 0 40px rgba(251, 191, 36, 0.15); }
-  100% { border-color: rgba(251, 191, 36, 1); box-shadow: 0 0 60px rgba(251, 191, 36, 0.35); }
 }
 
 .ch4-summary-top-bar {
-  background: rgba(15, 12, 7, 0.85);
+  background: rgba(244, 244, 245, 0.9);
   padding: 20px 35px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .ch4-summary-menu-btn {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
+  background: #ffffff;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  color: #b45309;
   padding: 10px 24px;
   font-size: 14px;
   font-weight: 700;
@@ -300,7 +318,8 @@
 .ch4-summary-menu-btn:hover {
   background: #fbbf24;
   color: #000000;
-  box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+  border-color: #fbbf24;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
   transform: translateY(-1px);
 }
 
@@ -319,30 +338,29 @@
   font-family: 'Orbitron', sans-serif;
   font-size: 38px;
   font-weight: 900;
-  color: #fbbf24;
+  color: #b45309; 
   margin: 0 0 20px 0;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
 }
 
 .ch4-summary-status-desc {
   font-size: 22px;
-  font-weight: 500;
-  color: #fef08a;
+  font-weight: 600;
+  color: #1c1917; 
   margin: 0 0 16px 0;
   letter-spacing: 0.5px;
 }
 
 .ch4-highlight-kingdom {
-  color: #ffffff;
+  color: #d97706; 
   font-weight: 700;
-  border-bottom: 1px dashed #fbbf24;
+  border-bottom: 2px dashed #d97706;
 }
 
 .ch4-summary-style-desc {
   font-size: 16px;
-  color: #d4d4d8;
+  color: #44403c; 
   line-height: 1.6;
   margin: 0 0 35px 0;
 }
@@ -357,17 +375,15 @@
 }
 
 .ch4-style-kind {
-  background: rgba(244, 63, 94, 0.15);
-  color: #fb7185;
+  background: rgba(244, 63, 94, 0.1);
+  color: #e11d48;
   border: 1px solid #f43f5e;
-  box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
 }
 
 .ch4-style-hard {
-  background: rgba(251, 191, 36, 0.1);
-  color: #fbbf24;
+  background: rgba(217, 119, 6, 0.1);
+  color: #d97706;
   border: 1px solid #fbbf24;
-  box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
 }
 
 .ch4-summary-score {
@@ -396,38 +412,31 @@
   width: 210px;
   height: auto;
   border-radius: 14px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85),
-              0 0 25px rgba(251, 191, 36, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .ch4-card-preview-box:hover .ch4-result-duck-card {
   transform: scale(1.06) rotate(-3deg);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9),
-              0 0 35px rgba(251, 191, 36, 0.3);
-  border-color: rgba(251, 191, 36, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
 .ch4-card-caption {
   font-family: 'Orbitron', sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   color: #71717a;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 700;
-  transition: color 0.3s ease;
 }
 
-.ch4-card-preview-box:hover .ch4-card-caption {
-  color: #fbbf24;
-}
-
+/* АНИМАЦИИ */
 .ch4-animation-fade-in {
   animation: ch4FadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes ch4FadeIn {
-  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
