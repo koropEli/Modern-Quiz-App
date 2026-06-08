@@ -6,7 +6,7 @@ function Achievements({ onBack }) {
   const [unlocked, setUnlocked] = useState([]);
 
   useEffect(() => {
-    setUnlocked(progressStorage.getAchievements());
+    setUnlocked(progressStorage.getAchievements()); 
   }, []);
 
   const achievementsData = [
