@@ -8,7 +8,7 @@ import ChapterOne from "./chapters/ChapterOne/ChapterOne";
 import ChapterTwo from "./chapters/ChapterTwo/ChapterTwo";
 import ChapterThree from "./chapters/ChapterThree/ChapterThree";
 import ChapterFour from "./chapters/ChapterFour/ChapterFour";
-import Achievements from "./Achievements"; // Новый экран ачивок
+import Achievements from "./Achievements";
 
 import "./index.css";
 import "./App.css";
@@ -39,9 +39,9 @@ function App() {
   }
 
   function handleResetGame() {
-    const confirmReset = window.confirm(
-      "👑 Are you sure you want to overthrow the current dynasty? All progress will be lost!"
-    );
+    if (window.confirm("Are you sure? This will delete all your progress and achievements!")) {
+      progressStorage.resetAll(); // Вызывает твой метод из progressStorage
+    }
     if (confirmReset) {
       progressStorage.resetProgress(); 
       setUnlockedLevels([1]);           
@@ -57,7 +57,7 @@ function App() {
     return "/mainMenuBackground.jpg";
   }, [screen, currentLevel]);
 
-  // 1. Если режим "video"
+
   if (screen === "video" && currentLevel) {
     return (
       <ChapterVideo 
@@ -67,7 +67,7 @@ function App() {
     );
   }
 
-  // 2. Рендер основного контента
+
   return (
     <div 
       className="game-app-container" 
@@ -97,7 +97,7 @@ function App() {
                 );
               })}
             </div>
-
+            
             <hr style={{ borderColor: "rgba(251, 191, 36, 0.2)", margin: "25px auto", width: "80%" }} />
 
             {/* Кнопки теперь в контейнере, который растянет их по бокам */}
@@ -113,12 +113,10 @@ function App() {
         </div>
       )}
 
-      {/* 2.2. Экран ачивок */}
       {screen === "achievements" && (
         <Achievements onBack={() => setScreen("menu")} />
       )}
 
-      {/* 2.3. Сами главы */}
       {screen === "story" && currentLevel && (
         <>
           {currentLevel.id === 1 && <ChapterOne levelData={currentLevel} onLeave={() => setScreen("menu")} />}

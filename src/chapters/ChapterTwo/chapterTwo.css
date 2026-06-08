@@ -195,21 +195,28 @@
   cursor: not-allowed;
 }
 
+.casino-result-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  width: 100%;
+}
+
 .casino-next-btn {
+  display: inline-block;
   margin-top: 24px;
+  padding: 18px 40px;
   background: #d97706;
   color: #041e10;
   border: none;
-  padding: 18px 0;
+  border-radius: 8px;
   font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 8px;
   cursor: pointer;
-  width: 100%;
-  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.2);
-  transition: all 0.2s ease;
+  width: auto;
+  min-width: 200px;
 }
 
 .casino-next-btn:hover {

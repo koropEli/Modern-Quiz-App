@@ -46,12 +46,11 @@ function ChapterFour({ levelData, onLeave }) {
       
       // 1. Устанавливаем стиль правления
       setReignStyle(selectedStyle);
-      
-      // 2. Разблокируем ачивку сразу с нужным ID
+
       if (selectedStyle === "benevolent") {
-        progressStorage.unlockAchievement("emperor_duck"); // Убедись, что ID совпадает с Achievements.jsx
+        progressStorage.unlockAchievement("emperor_duck"); 
       } else {
-        progressStorage.unlockAchievement("peacemaker"); // Убедись, что ID совпадает с Achievements.jsx
+        progressStorage.unlockAchievement("peacemaker"); 
       }
     }
   }

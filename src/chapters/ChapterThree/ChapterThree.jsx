@@ -9,10 +9,9 @@ function ChapterThree({ levelData, onLeave }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   
-  // Хранилища для финала
-  const [typedAnswer, setTypedAnswer] = useState(""); // Вводимый текст
-  const [gangName, setGangName] = useState("Your Gang"); // Имя банды
-  const [mercyStyle, setMercyStyle] = useState(""); // "merciful" или "ruthless"
+  const [typedAnswer, setTypedAnswer] = useState("");
+  const [gangName, setGangName] = useState("Your Gang");
+  const [mercyStyle, setMercyStyle] = useState("");
 
   const questions = levelData?.questions || [];
   const currentQuestion = questions[currentIndex];
@@ -26,24 +25,19 @@ function ChapterThree({ levelData, onLeave }) {
     setIsAnswered(true);
     setScore((prev) => prev + 1);
 
-    // Логика определения стиля правления по ID вопроса из вашего levelsData
-    if (currentQuestion?.id === "mercy") {
-      if (answerIndex === 0) {
-        setMercyStyle("merciful");
-      } else {
-        setMercyStyle("ruthless");
-      }
+    if (currentQuestion?.text.toLowerCase().includes("mercy") || currentQuestion?.id === "mercy") {
+      setMercyStyle(answerIndex === 0 ? "merciful" : "ruthless");
     }
+    
     if (currentIndex === questions.length - 1) {
       progressStorage.unlockLevel(4);
 
-    if (choice === "spared") {
+      if (answerIndex === 0) {
         progressStorage.unlockAchievement("merciful_don");
-    } else {
+      } else {
         progressStorage.unlockAchievement("ruthless_don");
+      }
     }
-    }
-
   }
 
   function handleTextSubmit(e) {
