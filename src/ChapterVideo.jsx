@@ -7,7 +7,6 @@ function ChapterVideo({ videoSrc, onVideoEnd }) {
       <video
         src={videoSrc}
         autoPlay       // Видео запускается само при открытии экрана
-        controls       // Добавляет стандартную полосу перемотки и звука
         onEnded={onVideoEnd} // Браузер сам вызовет функцию закрытия, когда видео кончится
       />
       

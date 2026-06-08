@@ -1,10 +1,8 @@
-// Импортируем сам React и хук useState для управления внутренним состоянием компонента
 import React, { useState } from "react";
-// Подключаем наш обновленный светлый файл стилей для этой главы
 import "./chapterFour.css";
 import { progressStorage } from "../../progressStorage";
 
-// Объявляем основной компонент четвертой главы, принимающий данные уровня и функцию выхода в меню
+
 function ChapterFour({ levelData, onLeave }) {
   // Переключатель: false — показываем пролог, true — запускаем сам квиз/финал
   const [isStarted, setIsStarted] = useState(false); 
@@ -46,7 +44,7 @@ function ChapterFour({ levelData, onLeave }) {
     setScore((prev) => prev + 1);
 
     // Логика финала: проверяем, является ли вопрос финальным (по ID "regime" или просто если он последний)
-    if (currentQuestion?.id === "regime" || currentIndex === questions.length - 1) {
+    if (currentQuestion?.id === "domesticPolicy" || currentIndex === questions.length - 1) {
       // Если выбран первый вариант (индекс 0) — это путь Доброты (Сердце)
       if (answerIndex === 0) {
         setReignStyle("benevolent"); 

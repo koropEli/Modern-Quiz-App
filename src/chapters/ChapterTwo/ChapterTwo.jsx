@@ -23,7 +23,10 @@ function ChapterTwo({ levelData, onLeave }) {
     if (answerIndex === currentQuestion.correct) {
       setScore((prev) => prev + 1);
     }
-    progressStorage.unlockLevel(3);
+    
+    if (currentIndex === questions.length - 1) {
+      progressStorage.unlockLevel(3);
+    }
   }
 
   function handleNext() {

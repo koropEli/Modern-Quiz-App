@@ -34,7 +34,9 @@ function ChapterThree({ levelData, onLeave }) {
         setMercyStyle("ruthless");
       }
     }
-    progressStorage.unlockLevel(4);
+    if (currentIndex === questions.length - 1) {
+      progressStorage.unlockLevel(4);
+    }
   }
 
   function handleTextSubmit(e) {
