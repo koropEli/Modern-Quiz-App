@@ -8,7 +8,7 @@
   justify-content: flex-start; 
   align-items: center;
   box-sizing: border-box;
-  padding-left: 6%; /* Идеальный отступ, чтобы не перекрывать утку на троне */
+  padding-left: 6%; 
 }
 
 .menu-box {
@@ -16,7 +16,7 @@
   backdrop-filter: blur(12px);
   padding: 45px 40px;
   border-radius: 12px;
-  border: 1px solid rgba(251, 191, 36, 0.15); /* Едва заметная золотая рамка */
+  border: 1px solid rgba(251, 191, 36, 0.15);
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.6);
   width: 100%;
   max-width: 420px;
@@ -47,7 +47,7 @@
 }
 
 .menu-btn {
-  background: rgba(20, 20, 25, 0.6); /* Мрачный темный фон кнопок */
+  background: rgba(20, 20, 25, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.05);
   color: #cbd5e1;
   padding: 15px 20px;
@@ -63,12 +63,11 @@
   width: 100%;
 }
 
-/* ЭФФЕКТ ПРИ НАВЕДЕНИИ: Мрачно-багровое свечение */
 .menu-btn:hover:not(:disabled) {
   background: #7f1d1d;
   color: #fff;
   border-color: #b91c1c;
-  transform: translateX(6px); /* Медленное зловещее выдвижение вправо */
+  transform: translateX(6px);
   box-shadow: 0 0 20px rgba(185, 28, 28, 0.4);
 }
 
@@ -86,10 +85,57 @@
 }
 
 .menu-btn:hover .marker {
-  color: #fff; /* При наведении маркер загорается белым вместе с текстом */
+  color: #fff;
 }
 
 .lock-icon {
   font-size: 12px;
   opacity: 0.6;
+}
+
+/* --- Контейнер для нижних кнопок --- */
+.menu-bottom-buttons {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+  margin-top: 30px; 
+  gap: 15px; 
+}
+
+/* --- Общие стили для кнопок внизу --- */
+.menu-reset-btn, .achievements-btn {
+  flex: 1;
+  padding: 12px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Специфические цвета */
+.menu-reset-btn {
+  background: rgba(239, 68, 68, 0.05);
+  color: #f87171;
+}
+
+.menu-reset-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #f87171;
+}
+
+.achievements-btn {
+  background: rgba(245, 158, 11, 0.05);
+  color: #fbbf24;
+}
+
+.achievements-btn:hover {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #fbbf24;
 }

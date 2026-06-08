@@ -36,7 +36,14 @@ function ChapterThree({ levelData, onLeave }) {
     }
     if (currentIndex === questions.length - 1) {
       progressStorage.unlockLevel(4);
+
+    if (choice === "spared") {
+        progressStorage.unlockAchievement("merciful_don");
+    } else {
+        progressStorage.unlockAchievement("ruthless_don");
     }
+    }
+
   }
 
   function handleTextSubmit(e) {

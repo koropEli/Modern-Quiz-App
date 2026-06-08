@@ -66,33 +66,37 @@ img {
 }
 
 
+/* Контейнер для нижних кнопок */
+.menu-bottom-buttons {
+  display: flex;
+  justify-content: space-between; /* Распределяет кнопки по краям */
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
 
 
 
-
-
-
-/* --- Стили для кнопки сброса прогресса --- */
 .menu-reset-btn {
-  background-color: transparent;      /* Прозрачный фон */
-  color: rgba(255, 255, 255, 0.5);    /* Полупрозрачный белый текст, чтобы не сильно выделялась */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Тонкая полупрозрачная рамка */
-  padding: 8px 16px;                  /* Отступы внутри кнопки */
-  border-radius: 6px;                 /* Скругленные углы */
-  font-family: inherit;               /* Берем шрифт игры */
-  font-size: 0.85rem;                 /* Чуть меньше, чем основные кнопки */
-  cursor: pointer;                    /* Курсор в виде пальца */
-  transition: all 0.3s ease;          /* Плавная анимация при наведении */
+  background-color: transparent;     
+  color: rgba(255, 255, 255, 0.5);    
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  padding: 8px 16px;                  
+  border-radius: 6px;                
+  font-family: inherit;              
+  font-size: 0.85rem;                
+  cursor: pointer;                    
+  transition: all 0.3s ease;         
   
-  /* Центрируем кнопку */
+
   display: block;
   margin: 0 auto; 
 }
 
-/* Эффект при наведении мышки (делаем её слегка красной, намекая на удаление) */
+
 .menu-reset-btn:hover {
-  background-color: rgba(220, 38, 38, 0.1); /* Легкий красный фон */
-  color: rgba(255, 200, 200, 0.9);          /* Текст становится ярче */
-  border-color: rgba(220, 38, 38, 0.5);     /* Рамка краснеет */
-  box-shadow: 0 0 10px rgba(220, 38, 38, 0.2); /* Легкое красное свечение */
-}
+  background-color: rgba(220, 38, 38, 0.1); 
+  color: rgba(255, 200, 200, 0.9);       
+  border-color: rgba(220, 38, 38, 0.5);     
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.2); 
+} 

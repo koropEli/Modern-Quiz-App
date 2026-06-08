@@ -1,0 +1,58 @@
+.achievements-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  /* Убираем лишние отступы, чтобы кнопки не улетали за экран */
+}
+
+.achievements-container {
+  width: 100%;
+  max-width: 1200px; /* Чтобы не растягивалось на весь экран */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.achievements-grid {
+  display: grid;
+  /* Вот секрет: 4 колонки в ряд */
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 15px;
+  width: 100%;
+  justify-items: center;
+}
+
+.achievement-card {
+  width: 100%;
+  max-width: 200px; /* Чтобы карточки были компактными */
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #444;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+}
+
+
+.achievement-card:hover {
+  transform: translateY(-10px);
+  border-color: #d97706;
+}
+
+/* Кнопка "Назад" */
+.back-to-menu-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 10px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.back-to-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

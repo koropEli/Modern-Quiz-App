@@ -32,25 +32,26 @@ function ChapterFour({ levelData, onLeave }) {
   // Проверка: является ли текущий вопрос текстовым (если тип "text" или у него вообще нет вариантов ответов)
   const isTextInputQuestion = currentQuestion?.type === "text" || !currentQuestion?.options || currentQuestion?.options.length === 0;
 
-  // Функция, которая срабатывает при клике на вариант ответа в обычном вопросе
+
   function handleAnswerClick(answerIndex) {
-    // Если на вопрос уже ответили — игнорируем повторные клики
     if (isAnswered) return;
-    // Запоминаем, на какую кнопку нажал игрок
+    
     setSelectedAnswer(answerIndex);
-    // Ставим флаг, что ответ принят (чтобы подсветить кнопку и показать кнопку "Далее")
     setIsAnswered(true);
-    // Увеличиваем общий счетчик очков
     setScore((prev) => prev + 1);
 
-    // Логика финала: проверяем, является ли вопрос финальным (по ID "regime" или просто если он последний)
+    // Проверяем, является ли это решение определяющим для стиля
     if (currentQuestion?.id === "domesticPolicy" || currentIndex === questions.length - 1) {
-      // Если выбран первый вариант (индекс 0) — это путь Доброты (Сердце)
-      if (answerIndex === 0) {
-        setReignStyle("benevolent"); 
+      const selectedStyle = answerIndex === 0 ? "benevolent" : "absolute";
+      
+      // 1. Устанавливаем стиль правления
+      setReignStyle(selectedStyle);
+      
+      // 2. Разблокируем ачивку сразу с нужным ID
+      if (selectedStyle === "benevolent") {
+        progressStorage.unlockAchievement("emperor_duck"); // Убедись, что ID совпадает с Achievements.jsx
       } else {
-        // Иначе — это путь Абсолютной Власти (Трефы)
-        setReignStyle("absolute"); 
+        progressStorage.unlockAchievement("peacemaker"); // Убедись, что ID совпадает с Achievements.jsx
       }
     }
   }
@@ -153,16 +154,16 @@ function ChapterFour({ levelData, onLeave }) {
 
                 {/* Правая сторона: Демонстрация премиальной карточки утки */}
                 <div className="ch4-summary-card-side">
-                  {/* Если reignStyle равен "benevolent", показываем утку с Сердцем */}
                   {reignStyle === "benevolent" ? (
                     <div className="ch4-card-preview-box ch4-animation-fade-in">
-                      <img src="/cardHeart.jpg" alt="Card Heart" className="ch4-result-duck-card" />
+                      {/* Сюда ставь картинку, которая должна соответствовать "Сердечкам" (или наоборот) */}
+                      <img src="/cardAceofClubs.jpg" alt="Card Ace of Clubs" className="ch4-result-duck-card" />
                       <span className="ch4-card-caption">Path of Benevolence</span>
                     </div>
                   ) : (
-                    /* Во всех остальных случаях (путь силы) — выводим утку с Трефами */
                     <div className="ch4-card-preview-box ch4-animation-fade-in">
-                      <img src="/cardAceofClubs.jpg" alt="Card Ace of Clubs" className="ch4-result-duck-card" />
+                      {/* Сюда ставь картинку с "Пушкой" (если это путь войны/Absolute) */}
+                      <img src="/cardHeart.jpg" alt="Card Heart" className="ch4-result-duck-card" />
                       <span className="ch4-card-caption">Path of Absolute Power</span>
                     </div>
                   )}

@@ -12,7 +12,6 @@ export const progressStorage = {
   },
 
 
-
   // Добавляем новый уровень в список открытых
   unlockLevel(levelId) {
     const currentLevels = this.getUnlockedLevels();
@@ -26,5 +25,22 @@ export const progressStorage = {
   // Сброс прогресса до самого первого уровня
   resetProgress() {
     localStorage.setItem(PROGRESS_KEY, "1");
+  },
+
+
+  getAchievements: () => {
+    const saved = localStorage.getItem("duckAchievements");
+    return saved ? JSON.parse(saved) : [];
+  },
+
+  // Записываем новую ачивку (вызовем эту команду в конце 3 и 4 главы)
+  unlockAchievement: (achievementId) => {
+    const current = progressStorage.getAchievements();
+    if (!current.includes(achievementId)) {
+      current.push(achievementId);
+      localStorage.setItem("duckAchievements", JSON.stringify(current));
+    }
   }
+
+
 };
