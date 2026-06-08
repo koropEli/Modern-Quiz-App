@@ -51,7 +51,6 @@ function ChapterOne({ levelData, onLeave }) {
     }
 
     // Независимо от того, последний вопрос или нет, двигаем индекс вперед
-    // (Если вопрос последний, интерфейс ниже сам переключится на экран "Chapter Cleared!")
     setCurrentIndex((prev) => prev + 1); 
     setAnswered(false); // Размораживаем кнопки для нового вопроса
     setSelectedChoiceIdx(null); // Убираем подсветку
@@ -78,21 +77,24 @@ function ChapterOne({ levelData, onLeave }) {
           <button className="ch1-back-btn" onClick={onLeave}>🡨 Abandon Mission</button>
           <div className="ch1-card">
             
-            {/* Если мы прошли все вопросы (индекс больше длины массива) -> показываем итоги */}
+            {/* Если мы прошли все вопросы -> показываем итоги */}
             {currentIndex >= levelData.questions.length ? (
               <>
                 <div className="ch1-top-bar">
                   <span>Victory</span>
                   <span>Score: {score} / {levelData.questions.length}</span>
                 </div>
-                {/* ... верстка экрана победы ... */}
+                <h2 className="ch1-question-text">Chapter Cleared!</h2>
                 <button className="ch1-action-btn" onClick={onLeave}>Continue Journey ➜</button>
               </>
             ) : (
               
               /* Если вопросы еще есть -> рисуем текущий вопрос */
               <>
-                {/* ... заголовок и текст вопроса ... */}
+                <div className="ch1-top-bar">
+                  <span>Question {currentIndex + 1} of {levelData.questions.length}</span>
+                  <span>Score: {score}</span>
+                </div>
                 {currentQuestion && (
                   <>
                     <h2 className="ch1-question-text">{currentQuestion.text}</h2>
@@ -116,12 +118,26 @@ function ChapterOne({ levelData, onLeave }) {
                       })}
                     </div>
 
-                    {/* Показываем гифку и кнопку NEXT только ПОСЛЕ ответа (когда answered === true) */}
+                    {/* Возвращаем уток! */}
                     {answered && (
                       <div className="ch1-duck-feedback">
-                        {/* ... гифка утки ... */}
+                        {selectedChoiceIdx === currentQuestion.correct ? (
+                          <>
+                            {/* Танцующая утка для правильного ответа */}
+                            <img src="/dancingduck.gif" alt="Correct Duck" className="ch1-duck-gif" />
+                            <span className="ch1-correct-txt">Correct! Great job!</span>
+                          </>
+                        ) : (
+                          <>
+                            {/* Утка для неправильного ответа */}
+                            <img src="/feedbackduck.gif" alt="Wrong Duck" className="ch1-duck-gif" />
+                            <span className="ch1-wrong-txt">Oops! That's incorrect.</span>
+                          </>
+                        )}
                       </div>
                     )}
+
+                    {/* Кнопка NEXT */}
                     {answered && (
                       <button className="ch1-action-btn" onClick={handleNext}>Next ➜</button>
                     )}
